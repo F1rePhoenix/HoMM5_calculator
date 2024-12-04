@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расчет урона HoMM 5</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Расчет урона HoMM 5</h1>
+        <form id="damageCalculator">
+            <div class="row">
+                <div class="column">
+                    <h2>Атакующее существо</h2>
+                    <label for="damageRange">Урон (мин - макс):</label>
+                    <div class="inline-inputs">
+                        <input type="number" id="minDamage" placeholder="Мин." required>
+                        <input type="number" id="maxDamage" placeholder="Макс." required>
+                    </div>
+                    <label for="attack">Атака:</label>
+                    <input type="number" id="attack" required>
+
+                    <label for="quantity">Количество существ:</label>
+                    <input type="number" id="quantity" required>
+                </div>
+                <div class="column">
+                    <h2>Обороняющееся существо</h2>
+                    <label for="defense">Защита:</label>
+                    <input type="number" id="defense" required>
+
+                    <label for="hp">Здоровье:</label>
+                    <input type="number" id="hp" required>
+
+                    <div class="results">
+                        <h3>Результаты</h3>
+                        <p><strong>Нанесенный урон:</strong> <span id="damageOutput">-</span></p>
+                        <p><strong>Убито существ:</strong> <span id="killedOutput">-</span></p>
+                    </div>
+                </div>
+                <div class="column modifiers">
+                    <h2>Модификаторы</h2>
+                    <button type="button" id="rangeAttackBtn" class="modifier-btn">Дальнобойная атака</button>
+                    <button type="button" id="perkShootingBtn" class="modifier-btn">Перк стрельба</button>
+                </div>
+            </div>
+        </form>
+        <button id="calculateBtn">Рассчитать</button>
+    </div>
+    <script src="JS/script.js"></script>
+</body>
+</html>
+
