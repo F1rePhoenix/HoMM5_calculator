@@ -3,51 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Расчет урона HoMM 5</title>
+    <title>Расчет урона в HoMM5</title>
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
+    <h1>Расчет урона в HoMM5</h1>
     <div class="container">
-        <h1>Расчет урона HoMM 5</h1>
-        <form id="damageCalculator">
-            <div class="row">
-                <div class="column">
-                    <h2>Атакующее существо</h2>
-                    <label for="damageRange">Урон (мин - макс):</label>
-                    <div class="inline-inputs">
-                        <input type="number" id="minDamage" placeholder="Мин." required>
-                        <input type="number" id="maxDamage" placeholder="Макс." required>
-                    </div>
-                    <label for="attack">Атака:</label>
-                    <input type="number" id="attack" required>
-
-                    <label for="quantity">Количество существ:</label>
-                    <input type="number" id="quantity" required>
-                </div>
-                <div class="column">
-                    <h2>Обороняющееся существо</h2>
-                    <label for="defense">Защита:</label>
-                    <input type="number" id="defense" required>
-
-                    <label for="hp">Здоровье:</label>
-                    <input type="number" id="hp" required>
-
-                    <div class="results">
-                        <h3>Результаты</h3>
-                        <p><strong>Нанесенный урон:</strong> <span id="damageOutput">-</span></p>
-                        <p><strong>Убито существ:</strong> <span id="killedOutput">-</span></p>
-                    </div>
-                </div>
-                <div class="column modifiers">
-                    <h2>Модификаторы</h2>
-                    <button type="button" id="rangeAttackBtn" class="modifier-btn">Дальнобойная атака</button>
-                    <button type="button" id="perkShootingBtn" class="modifier-btn">Перк стрельба</button>
-                </div>
-            </div>
-        </form>
-        <button id="calculateBtn">Рассчитать</button>
+        <div class="column">
+            <h2>Ваше существо</h2>
+            <input type="number" id="your-min-damage" placeholder="Мин. урон">
+            <input type="number" id="your-max-damage" placeholder="Макс. урон">
+            <input type="number" id="your-attack" placeholder="Атака">
+            <input type="number" id="your-defense" placeholder="Защита">
+            <input type="number" id="your-health" placeholder="Здоровье">
+            <input type="number" id="your-quantity" placeholder="Количество">
+        </div>
+        <div class="column">
+            <h2>Нейтральный юнит</h2>
+            <select id="faction">
+                <option value="" disabled selected>Выберите фракцию</option>
+            </select>
+            <select id="tier">
+                <option value="" disabled selected>Выберите уровень</option>
+            </select>
+            <select id="unit">
+                <option value="" disabled selected>Выберите юнита</option>
+            </select>
+            <input type="number" id="neutral-min-damage" placeholder="Мин. урон">
+            <input type="number" id="neutral-max-damage" placeholder="Макс. урон">
+            <input type="number" id="neutral-attack" placeholder="Атака">
+            <input type="number" id="neutral-defense" placeholder="Защита">
+            <input type="number" id="neutral-health" placeholder="Здоровье">
+            <input type="number" id="neutral-quantity" placeholder="Количество">
+        </div>
+        <div class="column smaller">
+            <h2>Модификаторы</h2>
+            <button id="perk-shooting" class="modifier">Перк стрельба</button>
+            <button id="long-range-attack" class="modifier">Дальнобойная атака</button>
+        </div>
     </div>
+    <div class="controls">
+        <button id="switch-sides" class="modifier">Сменить сторону</button>
+        <button id="calculate">Рассчитать</button>
+    </div>
+    <div class="results">
+        <h3>Результаты:</h3>
+        <p id="damage-result">Урон: </p>
+        <p id="kill-result">Убито существ: </p>
+    </div>
+    <script src="units.js"></script>
     <script src="JS/script.js"></script>
 </body>
 </html>
-
