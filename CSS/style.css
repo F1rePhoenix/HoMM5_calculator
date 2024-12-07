@@ -83,6 +83,7 @@ button.modifier.active {
     align-items: flex-start;
     gap: 10px;
 }
+
 .column {
     width: 30%;
 }
