@@ -333,10 +333,14 @@ tierSelect.addEventListener('change', () => {
 
 unitSelect.addEventListener('change', () => {
     const selectedUnit = units[factionSelect.value][tierSelect.value][unitSelect.value];
+    const heroAttack = parseInt(document.getElementById('hero-attack').value) || 0;
+    const heroDefense = parseInt(document.getElementById('hero-defense').value) || 0;
+    const finalAttack = selectedUnit.attack + heroAttack;
+    const finalDefense = selectedUnit.defense + heroDefense;
     document.getElementById('neutral-min-damage').value = selectedUnit.damage.split('-')[0];
     document.getElementById('neutral-max-damage').value = selectedUnit.damage.split('-')[1];
-    document.getElementById('neutral-attack').value = selectedUnit.attack;
-    document.getElementById('neutral-defense').value = selectedUnit.defense;
+    document.getElementById('neutral-attack').value = finalAttack;
+    document.getElementById('neutral-defense').value = finalDefense;
     document.getElementById('neutral-health').value = selectedUnit.health;
 });
 // Модификаторы

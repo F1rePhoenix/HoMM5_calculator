@@ -102,3 +102,31 @@ button.modifier.active {
 .results {
     margin-top: 20px;
 }
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Расстояние между элементами */
+    margin-bottom: 10px;
+}
+
+.input-row label {
+    min-width: 80px; /* Ширина описания */
+    font-weight: bold;
+}
+
+.input-row input {
+    width: 100px; /* Ширина инпутов */
+    padding: 5px;
+}
+
+.container .column label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.container .column input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+}

@@ -10,12 +10,28 @@
     <h1>Расчет урона в HoMM5</h1>
     <div class="container">
         <div class="column">
+            <h2>Герой</h2>
+            <div class="input-row">
+                <label for="hero-attack">Атака:</label>
+                <input type="number" id="hero-attack" placeholder="Атака" value="0">
+        
+                <label for="hero-defense">Защита:</label>
+                <input type="number" id="hero-defense" placeholder="Защита" value="0">
+            </div>
             <h2>Ваше существо</h2>
-            <input type="number" id="your-min-damage" placeholder="Мин. урон" value="0">
-            <input type="number" id="your-max-damage" placeholder="Макс. урон" value="0">
+            <div class="input-row">
+                <label for="your-min-damage">Мин. урон:</label>
+                <input type="number" id="your-min-damage" placeholder="Мин. урон" value="0">
+                <label for="your-max-damage">Макс. урон:</label>
+                <input type="number" id="your-max-damage" placeholder="Макс. урон" value="0">
+            </div>
+            <label for="your-attack">Атака:</label>
             <input type="number" id="your-attack" placeholder="Атака" value="0">
+            <label for="your-defense">Защита:</label>
             <input type="number" id="your-defense" placeholder="Защита" value="0">
+            <label for="your-health">Здоровье:</label>
             <input type="number" id="your-health" placeholder="Здоровье" value="1">
+            <label for="your-quantity">Количество:</label>
             <input type="number" id="your-quantity" placeholder="Количество" value="1">
         </div>
         <div class="column">
@@ -29,11 +45,21 @@
             <select id="unit">
                 <option value="" disabled selected>Выберите юнита</option>
             </select>
-            <input type="number" id="neutral-min-damage" placeholder="Мин. урон" value="0">
-            <input type="number" id="neutral-max-damage" placeholder="Макс. урон" value="0">
+           
+            <div class="input-row">
+                <label for="neutral-min-damage">Мин. урон:</label>
+                <input type="number" id="neutral-min-damage" placeholder="Мин. урон" value="0">
+    
+                <label for="neutral-max-damage">Макс. урон:</label>
+                <input type="number" id="neutral-max-damage" placeholder="Макс. урон" value="0">
+            </div>
+            <label for="neutral-attack">Атака:</label>
             <input type="number" id="neutral-attack" placeholder="Атака" value="0">
+            <label for="neutral-defense">Защита:</label>
             <input type="number" id="neutral-defense" placeholder="Защита" value="0">
+            <label for="neutral-health">Здоровье:</label>
             <input type="number" id="neutral-health" placeholder="Здоровье" value="1">
+            <label for="neutral-quantity">Количество:</label>
             <input type="number" id="neutral-quantity" placeholder="Количество" value="1">
         </div>
         <div class="column smaller">
