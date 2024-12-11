@@ -300,12 +300,21 @@ const units = {
 const factionSelect = document.getElementById('faction');
 const tierSelect = document.getElementById('tier');
 const unitSelect = document.getElementById('unit');
-
+const yourFactionSelect = document.getElementById('your_faction');
+const yourTierSelect = document.getElementById('your_tier');
+const yourUnitSelect = document.getElementById('your_unit');
 for (let faction in units) {
     const option = document.createElement('option');
     option.value = faction;
     option.textContent = faction;
     factionSelect.appendChild(option);
+}
+
+for (let faction in units) {
+    const option = document.createElement('option');
+    option.value = faction;
+    option.textContent = faction;
+    yourFactionSelect.appendChild(option);
 }
 
 factionSelect.addEventListener('change', () => {
@@ -320,6 +329,18 @@ factionSelect.addEventListener('change', () => {
     }
 });
 
+yourFactionSelect.addEventListener('change', () => {
+    yourTierSelect.innerHTML = '<option disabled selected>Выберите уровень</option>';
+    yourUnitSelect.innerHTML = '<option disabled selected>Выберите юнита</option>';
+    const tiers = units[yourFactionSelect.value];
+    for (let tier in tiers) {
+        const option = document.createElement('option');
+        option.value = tier;
+        option.textContent = tier;
+        yourTierSelect.appendChild(option);
+    }
+});
+
 tierSelect.addEventListener('change', () => {
     unitSelect.innerHTML = '<option disabled selected>Выберите юнита</option>';
     const selectedUnits = units[factionSelect.value][tierSelect.value];
@@ -331,17 +352,37 @@ tierSelect.addEventListener('change', () => {
     });
 });
 
+yourTierSelect.addEventListener('change', () => {
+    yourUnitSelect.innerHTML = '<option disabled selected>Выберите юнита</option>';
+    const selectedUnits = units[yourFactionSelect.value][yourTierSelect.value];
+    selectedUnits.forEach((unit, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = unit.name;
+        yourUnitSelect.appendChild(option);
+    });
+});
+
 unitSelect.addEventListener('change', () => {
     const selectedUnit = units[factionSelect.value][tierSelect.value][unitSelect.value];
+    document.getElementById('neutral-min-damage').value = selectedUnit.damage.split('-')[0];
+    document.getElementById('neutral-max-damage').value = selectedUnit.damage.split('-')[1];
+    document.getElementById('neutral-attack').value = selectedUnit.attack;
+    document.getElementById('neutral-defense').value = selectedUnit.defense;
+    document.getElementById('neutral-health').value = selectedUnit.health;
+});
+
+yourUnitSelect.addEventListener('change', () => {
+    const selectedUnit = units[yourFactionSelect.value][yourTierSelect.value][yourUnitSelect.value];
     const heroAttack = parseInt(document.getElementById('hero-attack').value) || 0;
     const heroDefense = parseInt(document.getElementById('hero-defense').value) || 0;
     const finalAttack = selectedUnit.attack + heroAttack;
     const finalDefense = selectedUnit.defense + heroDefense;
-    document.getElementById('neutral-min-damage').value = selectedUnit.damage.split('-')[0];
-    document.getElementById('neutral-max-damage').value = selectedUnit.damage.split('-')[1];
-    document.getElementById('neutral-attack').value = finalAttack;
-    document.getElementById('neutral-defense').value = finalDefense;
-    document.getElementById('neutral-health').value = selectedUnit.health;
+    document.getElementById('your-min-damage').value = selectedUnit.damage.split('-')[0];
+    document.getElementById('your-max-damage').value = selectedUnit.damage.split('-')[1];
+    document.getElementById('your-attack').value = finalAttack;
+    document.getElementById('your-defense').value = finalDefense;
+    document.getElementById('your-health').value = selectedUnit.health;
 });
 // Модификаторы
 let modifiers = {
