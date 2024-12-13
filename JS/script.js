@@ -318,8 +318,8 @@ for (let faction in units) {
 }
 
 factionSelect.addEventListener('change', () => {
-    tierSelect.innerHTML = '<option disabled selected>Выберите уровень</option>';
-    unitSelect.innerHTML = '<option disabled selected>Выберите юнита</option>';
+    tierSelect.innerHTML = '<option disabled selected>Тир</option>';
+    unitSelect.innerHTML = '<option disabled selected>Существо</option>';
     const tiers = units[factionSelect.value];
     for (let tier in tiers) {
         const option = document.createElement('option');
@@ -330,8 +330,8 @@ factionSelect.addEventListener('change', () => {
 });
 
 yourFactionSelect.addEventListener('change', () => {
-    yourTierSelect.innerHTML = '<option disabled selected>Выберите уровень</option>';
-    yourUnitSelect.innerHTML = '<option disabled selected>Выберите юнита</option>';
+    yourTierSelect.innerHTML = '<option disabled selected>Тир</option>';
+    yourUnitSelect.innerHTML = '<option disabled selected>Существо</option>';
     const tiers = units[yourFactionSelect.value];
     for (let tier in tiers) {
         const option = document.createElement('option');
@@ -342,7 +342,7 @@ yourFactionSelect.addEventListener('change', () => {
 });
 
 tierSelect.addEventListener('change', () => {
-    unitSelect.innerHTML = '<option disabled selected>Выберите юнита</option>';
+    unitSelect.innerHTML = '<option disabled selected>Существо</option>';
     const selectedUnits = units[factionSelect.value][tierSelect.value];
     selectedUnits.forEach((unit, index) => {
         const option = document.createElement('option');
@@ -353,7 +353,7 @@ tierSelect.addEventListener('change', () => {
 });
 
 yourTierSelect.addEventListener('change', () => {
-    yourUnitSelect.innerHTML = '<option disabled selected>Выберите юнита</option>';
+    yourUnitSelect.innerHTML = '<option disabled selected>Существо</option>';
     const selectedUnits = units[yourFactionSelect.value][yourTierSelect.value];
     selectedUnits.forEach((unit, index) => {
         const option = document.createElement('option');
@@ -393,6 +393,15 @@ let modifiers = {
     frenzy: false,
     ringOfLife: false
 };
+document.querySelectorAll('.modifiers-column.ability').forEach(column => {
+    column.addEventListener('click', (event) => {
+        if (event.target.classList.contains('modifier')) {
+            column.querySelectorAll('.modifier').forEach(mod => mod.classList.remove('active'));
+            event.target.classList.toggle('active');
+        }
+    });
+});
+
 document.getElementById('perk-shooting').addEventListener('click', function () {
     modifiers.shooting = modifiers.shooting === 1 ? 1.2 : 1;
     this.classList.toggle('active');

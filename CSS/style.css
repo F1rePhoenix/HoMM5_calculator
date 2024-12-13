@@ -1,132 +1,276 @@
+@font-face {
+    font-family: "Corsiva";
+    src: url("fonts/Monotype-Corsiva-Bold-Italic.woff2") format("woff2"),
+         url("fonts/Monotype-Corsiva-Bold-Italic.ttf") format("truetype");
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
-    background-color: #f8f9fa;
+    padding: 0;
+    background-color: #E7B26B;
+    font-family: "Corsiva";
+    color: #294761;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.container {
+    width: 90%; 
+    max-width: 1200px;
+    background-color: #E7B26B;
 }
 
 h1 {
     text-align: center;
-    color: #333;
+    font-size: 48px;
+    color: #294761;
+    margin: 20px 0px;
 }
 
-.container {
+.columns {
     display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
+    justify-content: space-between;
+    gap: 2%;  
 }
 
 .column {
-    width: 30%;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.column h2 {
-    text-align: center;
-}
-
-.input-group {
     display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
+    flex-direction: column;
 }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+.column:nth-child(1),
+.column:nth-child(3) {
+    flex: 3; 
 }
 
-input,
+.column:nth-child(2) {
+    flex: 2; 
+}
+
+.content {
+    background-color: #493D32;
+    border: 3px solid #8D6035;
+    border-radius: 5px;
+    padding: 0 0.4%;
+    height: auto
+}
+
+
+h2 {
+    font-size: 36px;
+    text-align: center;
+    color: #F1BF11;
+    padding: 2%;
+    margin: 0;
+}
+
+.select-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1%;
+    gap: 2%;
+    margin-bottom: 5%;
+}
+
 select {
+    background-color: #322A21;
+    color: #C5BEA1;
+    font-family: "Corsiva";
+    border: 1px solid #8D6035;
+    border-radius: 5px;
+    padding: 5px 5px;
+    font-size: 20px;
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    max-width: none;
+    appearance: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('img/arrow.png');
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    padding-right: 35px;
+    background-size: 26px 26px;
 }
 
-button {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+select:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px #8D6035;
 }
 
-button:hover {
-    background-color: #0056b3;
+#your_faction, #your_unit, #faction, #unit  {
+    width: 40%;
 }
 
-button.modifier.active {
-    background-color: #28a745;
+#your_tier, #tier {
+    width: 25%;
 }
-
-.results {
-    text-align: center;
-    margin-top: 20px;
+#hero-attack, #hero-defense, #hero-FS{
+    width: 25%;
 }
-
-.results p {
-    font-size: 18px;
-}
-.container {
+.input-container {
     display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    gap: 10px;
+    flex-direction: column;
+    gap:3%;
 }
 
-.column {
-    width: 30%;
-}
-.smaller {
-    width: 20%;
-}
-.modifier {
-    display: block;
-    margin: 10px 0;
-    padding: 5px;
-}
-.controls {
-    margin-top: 20px;
-    text-align: center;
-}
-.results {
-    margin-top: 20px;
-}
 .input-row {
     display: flex;
-    align-items: center;
-    gap: 15px; /* Расстояние между элементами */
-    margin-bottom: 10px;
+    justify-content: space-between;
+    gap: 2%;
+    padding: 0 1%;
+    margin-bottom: 3%;
 }
 
-.input-row label {
-    min-width: 80px; /* Ширина описания */
-    font-weight: bold;
+.input-row.hero {
+    margin-bottom: 0%;
 }
 
-.input-row input {
-    width: 100px; /* Ширина инпутов */
-    padding: 5px;
+.input-row.hero-input {
+    margin: 0% 3% 2% 3%;
 }
 
-.container .column label {
-    display: block;
-    font-weight: bold;
-    margin-top: 10px;
+.label-column {
+    color: #F1BF11;
+    font-size: 30px;
+    text-align: center;
+    width: 30%;
+}
+.input-column {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    gap: 4%;
 }
 
-.container .column input {
+
+input{
+    font-family: "Corsiva";
+    padding: 1%;
+    font-size: 20px;
+    background: #322A21;
+    color: #C5BEA1;
+    border: 1px solid #8D6035;
+    border-radius: 7px;
     width: 100%;
-    padding: 5px;
-    margin-bottom: 10px;
+    transition: border-width 0.2s ease-in-out;
+}
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px #8D6035;
+}
+
+::placeholder {
+    color: #C5BEA1;
+     text-align: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.modifiers-column {
+    display: flex;
+    justify-content: space-between;
+    gap: 2%;
+    width: 30%;
+}
+
+.modifier {
+    aspect-ratio: 1 / 1;
+    width: 31%;
+    max-height: 100%;
+    background: #322A21;
+    border: 1px solid #8D6035;
+    border-radius: 5px;
+    cursor: pointer;
+    background-size: 95%;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease, border-width 0.1s ease;
+}
+.modifier:hover {
+    transform: scale(1.1);
+}
+.modifier.active {
+    box-shadow: 0 0 0 1px #F3A316;
+    border: 1px solid #F3A316
+}
+#basic-offense{
+    background-image: url('img/basicOffense.png');
+}
+#advanced-offense{
+    background-image: url('img/advancedOffense.png');
+}
+#expert-offense{
+    background-image: url('img/expertOffense.png');
+}
+#basic-defense{
+    background-image: url('img/basicDefense.png');
+}
+#advanced-defense{
+    background-image: url('img/advancedDefense.png');
+}
+#expert-defense{
+    background-image: url('img/expertDefense.png');
+}
+#frenzy{
+    background-image: url('img/frenzy.png');
+}
+#shooting{
+    background-image: url('img/archery.png');
+}
+#retribution{
+    background-image: url('img/retribution.png');
+}
+#vitality{
+    background-image: url('img/vitality.png');
+}
+#evasion{
+    background-image: url('img/evasion.png');
+}
+#defense{
+    background-image: url('img/defense.png');
+}
+#hold-ground{
+    background-image: url('img/holdGround.png');
+}
+#forest-rage{
+    background-image: url('img/forestRage.png');
+}
+#fog-veil{
+    background-image: url('img/fogVeil.png');
+}
+#straight-arrow{
+    background-image: url('img/straight_arrow.png');
+}
+#broken-arrow{
+    background-image: url('img/broken_arrow.png');
+}
+#no-melee-penalty{
+    background-image: url('img/attack.png');
+}
+#home-road{
+    background-image: url('img/roadHome.png');
+}
+#ability{
+    background-image: url('img/ability.png');
+}
+/* Адаптивные стили */
+@media (max-width: 767px) {
+    .columns {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .column {
+        width: 100%;
+    }
 }

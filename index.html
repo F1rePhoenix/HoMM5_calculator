@@ -1,99 +1,192 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Расчет урона в HoMM5</title>
+    <title>Расчет урона в HoMM5 Universe</title>
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
-    <h1>Расчет урона в HoMM5</h1>
     <div class="container">
-        <div class="column">
-            <h2>Герой</h2>
-            <div class="input-row">
-                <label for="hero-attack">Атака:</label>
-                <input type="number" id="hero-attack" placeholder="Атака" value="0">
-        
-                <label for="hero-defense">Защита:</label>
-                <input type="number" id="hero-defense" placeholder="Защита" value="0">
+        <h1>Расчет урона в HoMM5 Universe</h1>
+        <div class="columns">
+            <div class="column">
+                <div class="content">
+                    <h2>Ваше существо</h2>
+                    <div class="select-row">
+                        <select id="your_faction">
+                            <option value="" disabled selected>Фракция</option>
+                        </select>
+                        <select id="your_tier">
+                            <option value="" disabled selected>Тир</option>
+                        </select>
+                        <select id="your_unit">
+                            <option value="" disabled selected>Существо</option>
+                        </select>
+                    </div>
+                    <div class="input-container">
+                        <div class="input-row">
+                            <div class="label-column">Нападение</div>
+                            <div class="input-column">
+                                <input type="number" id="your-attack" placeholder="Нападение">
+                            </div>
+                            <div class="modifiers-column ability">
+                                <button class="modifier" id = "basic-offense"></button>
+                                <button class="modifier" id = "advanced-offense"></button>
+                                <button class="modifier" id = "expert-offense"></button>
+                            </div>
+                        </div>
+                    
+                        <div class="input-row">
+                            <div class="label-column">Защита</div>
+                            <div class="input-column">
+                                <input type="number" id="your-defense" placeholder="Защита">
+                            </div>
+                            <div class="modifiers-column ability">
+                                <button class="modifier" id = "basic-defense"></button>
+                                <button class="modifier" id = "advanced-defense"></button>
+                                <button class="modifier" id = "expert-defense"></button>
+                            </div>
+                        </div>
+                    
+                        <div class="input-row">
+                            <div class="label-column">Урон</div>
+                            <div class="input-column">
+                                <input type="number" id="your-min-damage" placeholder="Мин">
+                                <input type="number" id="your-max-damage" placeholder="Макс">
+                            </div>
+                            <div class="modifiers-column">
+                                <button class="modifier" id = "frenzy"></button>
+                                <button class="modifier" id = "shooting"></button>
+                                <button class="modifier" id = "retribution"></button>
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="label-column">Здоровье</div>
+                            <div class="input-column">
+                                <input type="number" id="your-health" placeholder="Здоровье">
+                            </div>
+                            <div class="modifiers-column">
+                                <button class="modifier" id = "vitality"></button>
+                                <button class="modifier" id = "evasion"></button>
+                                <button class="modifier" id = "defense"></button>
+                            </div>
+                        </div>
+                    
+                        <div class="input-row">
+                            <div class="label-column">Кол-во</div>
+                            <div class="input-column">
+                                <input type="number" id="your-quantity" placeholder="Кол-во">
+                            </div>
+                            <div class="modifiers-column">
+                                <button class="modifier" id = "hold-ground"></button>
+                                <button class="modifier" id = "forest-rage"></button>
+                                <button class="modifier" id = "fog-veil"></button>
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="label-column"></div>
+                            <div class="input-column"></div>
+                            <div class="modifiers-column">
+                                <button class="modifier" id="battle-fury"></button>
+                                <button class="modifier" id="archery"></button>
+                                <button class="modifier" id="cold-steel"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h2>Ваше существо</h2>
-            <select id="your_faction">
-                <option value="" disabled selected>Выберите фракцию</option>
-            </select>
-            <select id="your_tier">
-                <option value="" disabled selected>Выберите уровень</option>
-            </select>
-            <select id="your_unit">
-                <option value="" disabled selected>Выберите юнита</option>
-            </select>
-            <div class="input-row">
-                <label for="your-min-damage">Мин. урон:</label>
-                <input type="number" id="your-min-damage" placeholder="Мин. урон" value="0">
-                <label for="your-max-damage">Макс. урон:</label>
-                <input type="number" id="your-max-damage" placeholder="Макс. урон" value="0">
+            <div class="column">
+                <div class="content small">
+                    <h2>Герой</h2>
+                    <div class="input-row hero">
+                        <div class="label-column">Нап</div>
+                        <div class="label-column">Защ</div>
+                        <div class="label-column">БД</div>
+                    </div>
+                    <div class="input-row hero-input"> 
+                        <input type="number" id="hero-attack" placeholder="Нап">
+                        <input type="number" id="hero-defense" placeholder="Защ">
+                        <input type="number" id="hero-FS" placeholder="БД">
+                    </div>
+                </div>
             </div>
-            <label for="your-attack">Атака:</label>
-            <input type="number" id="your-attack" placeholder="Атака" value="0">
-            <label for="your-defense">Защита:</label>
-            <input type="number" id="your-defense" placeholder="Защита" value="0">
-            <label for="your-health">Здоровье:</label>
-            <input type="number" id="your-health" placeholder="Здоровье" value="1">
-            <label for="your-quantity">Количество:</label>
-            <input type="number" id="your-quantity" placeholder="Количество" value="1">
-        </div>
-        <div class="column">
-            <h2>Нейтральный юнит</h2>
-            <select id="faction">
-                <option value="" disabled selected>Выберите фракцию</option>
-            </select>
-            <select id="tier">
-                <option value="" disabled selected>Выберите уровень</option>
-            </select>
-            <select id="unit">
-                <option value="" disabled selected>Выберите юнита</option>
-            </select>
-           
-            <div class="input-row">
-                <label for="neutral-min-damage">Мин. урон:</label>
-                <input type="number" id="neutral-min-damage" placeholder="Мин. урон" value="0">
-    
-                <label for="neutral-max-damage">Макс. урон:</label>
-                <input type="number" id="neutral-max-damage" placeholder="Макс. урон" value="0">
-            </div>
-            <label for="neutral-attack">Атака:</label>
-            <input type="number" id="neutral-attack" placeholder="Атака" value="0">
-            <label for="neutral-defense">Защита:</label>
-            <input type="number" id="neutral-defense" placeholder="Защита" value="0">
-            <label for="neutral-health">Здоровье:</label>
-            <input type="number" id="neutral-health" placeholder="Здоровье" value="1">
-            <label for="neutral-quantity">Количество:</label>
-            <input type="number" id="neutral-quantity" placeholder="Количество" value="1">
-        </div>
-        <div class="column smaller">
-            <h2>Модификаторы</h2>
-            <button id="perk-shooting" class="modifier">Перк стрельба</button>
-            <button id="long-range-attack" class="modifier">Дальнобойная атака</button>
-            <button id="frenzy" class="modifier">Боевое безумие</button>
-            <button id="ring-of-life" class="modifier">Кольцо жизненной силы</button>
-            <div class="perks">
-                <button id="base-defense" class="modifier">Основы защиты</button>
-                <button id="improve-defense" class="modifier">Развитая защита</button>
-                <button id="perfect-defense" class="modifier">Искуссная защита</button>
+            <div class="column">
+                <div class="content">
+                    <h2>Нейтральный юнит</h2>
+                    <div class="select-row">
+                        <select id="faction">
+                            <option value="" disabled selected>Фракция</option>
+                        </select>
+                        <select id="tier">
+                            <option value="" disabled selected>Тир</option>
+                        </select>
+                        <select id="unit">
+                            <option value="" disabled selected>Существо</option>
+                        </select>
+                    </div>
+                    <div class="input-container">
+                        <div class="input-row">
+                            <div class="label-column">Нападение</div>
+                            <div class="input-column">
+                                <input type="number" id="neutral-attack" placeholder="Нападение">
+                            </div>
+                            <div class="modifiers-column ability">
+                                <button class="modifier" id = "broken-arrow"></button>
+                                <button class="modifier" id = "straight-arrow"></button>
+                                <button class="modifier" id = "ability"></button>
+                            </div>
+                        </div>
+                    
+                        <div class="input-row">
+                            <div class="label-column">Защита</div>
+                            <div class="input-column">
+                                <input type="number" id="neutral-defense" placeholder="Защита">
+                            </div>
+                            <div class="modifiers-column ability">
+                                <button class="modifier" id = "home-road"></button>
+                                <button class="modifier" id = "fog-veil"></button>
+                                <button class="modifier" id = "no-melee-penalty"></button>
+                            </div>
+                        </div>
+                    
+                        <div class="input-row">
+                            <div class="label-column">Урон</div>
+                            <div class="input-column">
+                                <input type="number" id="neutral-min-damage" placeholder="Мин">
+                                <input type="number" id="neutral-max-damage" placeholder="Макс">
+                            </div>
+                            <div class="modifiers-column">
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="label-column">Здоровье</div>
+                            <div class="input-column">
+                                <input type="number" id="neutral-health" placeholder="Здоровье">
+                            </div>
+                            <div class="modifiers-column">
+                            </div>
+                        </div>
+                    
+                        <div class="input-row">
+                            <div class="label-column">Кол-во</div>
+                            <div class="input-column">
+                                <input type="number" id="neutral-quantity" placeholder="Кол-во">
+                            </div>
+                            <div class="modifiers-column">
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="label-column"></div>
+                            <div class="input-column"></div>
+                            <div class="modifiers-column">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="controls">
-        <button id="switch-sides" class="modifier">Сменить сторону</button>
-        <button id="calculate">Рассчитать</button>
-    </div>
-    <div class="results">
-        <h3>Результаты:</h3>
-        <p id="damage-result">Урон: </p>
-        <p id="kill-result">Убито существ: </p>
-    </div>
-    <script src="units.js"></script>
     <script src="JS/script.js"></script>
 </body>
 </html>
