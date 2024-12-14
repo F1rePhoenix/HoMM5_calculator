@@ -28,9 +28,9 @@ body {
 
 h1 {
     text-align: center;
-    font-size: 48px;
+    font-size: 46px;
     color: #294761;
-    margin: 20px 0px;
+    margin: 2% 0px;
 }
 
 .columns {
@@ -151,6 +151,7 @@ select:focus {
 
 
 input{
+    text-align: center;
     font-family: "Corsiva";
     padding: 1%;
     font-size: 20px;
@@ -163,7 +164,8 @@ input{
 }
 input:focus {
     outline: none;
-    box-shadow: 0 0 0 1px #8D6035;
+    border: 1px solid #F3A316;
+    box-shadow: 0 0 0 1px #F3A316;
 }
 
 ::placeholder {
@@ -184,6 +186,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .modifier {
+    position: relative;
     aspect-ratio: 1 / 1;
     width: 31%;
     max-height: 100%;
@@ -194,14 +197,159 @@ input[type="number"]::-webkit-outer-spin-button {
     background-size: 95%;
     background-position: center;
     background-repeat: no-repeat;
-    transition: transform 0.3s ease, border-width 0.1s ease;
+    transition: transform 0.3s ease, border 0.1s ease, box-shadow 0.1s ease;
+}
+.modifier::after {
+    font-family: "Corsiva";
+    content: attr(data-tooltip); 
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #322A21;
+    color: #C5BEA1;
+    padding: 4% 8%;
+    border: 1px solid #8D6035;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modifier:hover::after {
+    opacity: 1;
+    visibility: visible;
 }
 .modifier:hover {
     transform: scale(1.1);
 }
 .modifier.active {
-    box-shadow: 0 0 0 1px #F3A316;
-    border: 1px solid #F3A316
+    border: 2px solid #F3A316;
+}
+.switch-sides {
+    width: 4vw;            
+    height: 4vw;
+    max-width: 100px;          
+    max-height: 100px;
+    background: #074459;
+    border: 3px solid #8D6035;
+    border-radius: 50%;
+    cursor: pointer;
+    background-size: 95%;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease, border-width 0.1s ease;
+    position: relative;
+    margin: 3% auto;           
+}
+
+.switch-sides:hover {
+    transform: scale(1.05);
+}
+
+.switch-sides.active {
+    border: 3px solid #F3A316;
+}
+
+.switch-sides::after {
+    font-family: "Corsiva";
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 110%;                  
+    left: 50%;
+    transform: translateX(-50%);
+    background: #322A21;
+    color: #C5BEA1;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.switch-sides:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.image-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 2%; 
+}
+
+.image-placeholder {
+    width: 28%;
+    aspect-ratio: 1 / 1; 
+    background: #322A21;
+    border: 2px solid #8D6035;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+}
+.image-placeholder img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+.action-button {
+    width: 35%;
+    aspect-ratio: 1/1;
+    background: #F3A316;
+    border: 3px solid #8D6035;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.action-button::after {
+    font-family: "Corsiva";
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 110%;                  
+    left: 50%;
+    transform: translateX(-50%);
+    background: #322A21;
+    color: #C5BEA1;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.action-button:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+.action-button:hover {
+    transform: scale(1.05);
+}
+.flipped {
+    transform: scaleX(-1);
+}
+.result-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 3%;
+    font-family: "Corsiva", sans-serif;
+    width: 100%;
+}
+.result-container p {
+    text-align: center;
+    margin: 2% 0;
+    font-size: 24px;
 }
 #basic-offense{
     background-image: url('img/basicOffense.png');
@@ -263,6 +411,15 @@ input[type="number"]::-webkit-outer-spin-button {
 #ability{
     background-image: url('img/ability.png');
 }
+#switch-sides{
+    background-image: url('img/change2.png');
+}
+/* #switch-weapon{
+    background-image: url('img/arrow_button.png');
+}
+#calculate{
+    background-image: url('img/sword.png');
+} */
 /* Адаптивные стили */
 @media (max-width: 767px) {
     .columns {

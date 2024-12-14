@@ -31,9 +31,9 @@
                                 <input type="number" id="your-attack" placeholder="Нападение">
                             </div>
                             <div class="modifiers-column ability">
-                                <button class="modifier" id = "basic-offense"></button>
-                                <button class="modifier" id = "advanced-offense"></button>
-                                <button class="modifier" id = "expert-offense"></button>
+                                <button class="modifier" id = "basic-offense" data-tooltip="Основы нападения"></button>
+                                <button class="modifier" id = "advanced-offense" data-tooltip="Развитое нападение"></button>
+                                <button class="modifier" id = "expert-offense" data-tooltip="Искусное нападение"></button>
                             </div>
                         </div>
                     
@@ -43,9 +43,9 @@
                                 <input type="number" id="your-defense" placeholder="Защита">
                             </div>
                             <div class="modifiers-column ability">
-                                <button class="modifier" id = "basic-defense"></button>
-                                <button class="modifier" id = "advanced-defense"></button>
-                                <button class="modifier" id = "expert-defense"></button>
+                                <button class="modifier" id = "basic-defense" data-tooltip="Основы защиты"></button>
+                                <button class="modifier" id = "advanced-defense" data-tooltip="Развитая защита"></button>
+                                <button class="modifier" id = "expert-defense" data-tooltip="Искусная защита"></button>
                             </div>
                         </div>
                     
@@ -56,9 +56,9 @@
                                 <input type="number" id="your-max-damage" placeholder="Макс">
                             </div>
                             <div class="modifiers-column">
-                                <button class="modifier" id = "frenzy"></button>
-                                <button class="modifier" id = "shooting"></button>
-                                <button class="modifier" id = "retribution"></button>
+                                <button class="modifier" id = "frenzy" data-tooltip="Боевое безумие"></button>
+                                <button class="modifier" id = "shooting" data-tooltip="Стрельба"></button>
+                                <button class="modifier" id = "retribution" data-tooltip="Воздаяние"></button>
                             </div>
                         </div>
                         <div class="input-row">
@@ -67,9 +67,9 @@
                                 <input type="number" id="your-health" placeholder="Здоровье">
                             </div>
                             <div class="modifiers-column">
-                                <button class="modifier" id = "vitality"></button>
-                                <button class="modifier" id = "evasion"></button>
-                                <button class="modifier" id = "defense"></button>
+                                <button class="modifier" id = "vitality" data-tooltip="Стойкость"></button>
+                                <button class="modifier" id = "evasion" data-tooltip="Уклонение"></button>
+                                <button class="modifier" id = "defense" data-tooltip="Оборона"></button>
                             </div>
                         </div>
                     
@@ -79,18 +79,18 @@
                                 <input type="number" id="your-quantity" placeholder="Кол-во">
                             </div>
                             <div class="modifiers-column">
-                                <button class="modifier" id = "hold-ground"></button>
-                                <button class="modifier" id = "forest-rage"></button>
-                                <button class="modifier" id = "fog-veil"></button>
+                                <button class="modifier" id = "hold-ground" data-tooltip="Глухая оборона"></button>
+                                <button class="modifier" id = "forest-rage" data-tooltip="Лесная ярость"></button>
+                                <button class="modifier" id = "fog-veil" data-tooltip="Туманная завеса"></button>
                             </div>
                         </div>
                         <div class="input-row">
                             <div class="label-column"></div>
                             <div class="input-column"></div>
                             <div class="modifiers-column">
-                                <button class="modifier" id="battle-fury"></button>
-                                <button class="modifier" id="archery"></button>
-                                <button class="modifier" id="cold-steel"></button>
+                                <button class="modifier" id="home-road" data-tooltip="Родные земли"></button>
+                                <button class="modifier" id="straight-arrow" data-tooltip="Стрельба без штрафа"></button>
+                                <button class="modifier" id="broken-arrow" data-tooltip="Стрельба со штрафом"></button>
                             </div>
                         </div>
                     </div>
@@ -110,6 +110,24 @@
                         <input type="number" id="hero-FS" placeholder="БД">
                     </div>
                 </div>
+                <button class="switch-sides" id = "switch-sides" data-tooltip="Смена стороны"></button>
+                <div class="image-row">
+                    <img class="image-placeholder" id="your-unit-image" src="CSS/img/Units/placeholder.png">
+                    <button class="action-button" id="calculate" data-tooltip="Рассчитать урон" style="background-image: url('CSS/img/sword.png');"></button>
+                    <img class="image-placeholder" id="neutral-unit-image" src="CSS/img/Units/placeholder.png">
+                </div>
+                <button class="switch-sides" id = "switch-weapon" data-tooltip="Смена типа атаки" style="background-image: url('CSS/img/arrow_button.png');"></button>
+                <div class="result-container">
+                    <div>
+                        <p><strong>Нанесенный урон:</strong></p>
+                        <p id="damage-result">-</p>
+                    </div>
+                    <div>
+                        <p><strong>Убито существ:</strong></p>
+                        <p id="kill-result">-</p>
+                    </div>
+                </div>
+
             </div>
             <div class="column">
                 <div class="content">
