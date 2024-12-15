@@ -389,14 +389,41 @@ yourUnitSelect.addEventListener('change', () => {
     const imgElement = document.getElementById('your-unit-image');
     imgElement.src = selectedUnit.image;
 });
-const switchSidesBtn = document.getElementById('switch-sides');
+//  кнопки "Смена стороны" и "Смена типа атаки"
+let isSwitchingSides = false;
+let isRangedAttack = false;
 const calculate = document.getElementById('calculate');
 const switchWeaponBtn = document.getElementById('switch-weapon');
-switchSidesBtn.addEventListener('click', () => {
-    calculate.classList.toggle('flipped');
-    switchWeaponBtn.classList.toggle('flipped');
+document.getElementById('switch-sides').addEventListener('click', function () {
+    const calculateImage = !isSwitchingSides && isRangedAttack 
+        ? "CSS/img/arrow_button_flipped.png" 
+        : !isSwitchingSides && !isRangedAttack 
+        ? "CSS/img/sword_flipped.png" 
+        : isSwitchingSides && isRangedAttack 
+        ? "CSS/img/arrow_button.png" 
+        : "CSS/img/sword.png";
+    const switchWeaponImage = !isSwitchingSides && isRangedAttack 
+        ? "CSS/img/sword_flipped.png" 
+        : !isSwitchingSides && !isRangedAttack 
+        ? "CSS/img/arrow_button_flipped.png" 
+        : isSwitchingSides && isRangedAttack 
+        ? "CSS/img/sword.png" 
+        : "CSS/img/arrow_button.png";
+    // Обновление изображений
+    calculate.style.backgroundImage = `url('${calculateImage}')`;
+    switchWeaponBtn.style.backgroundImage = `url('${switchWeaponImage}')`;
+    isSwitchingSides = !isSwitchingSides;
+    this.classList.toggle('active');
+    calculate.classList.add('spin-effect');
+    switchWeaponBtn.classList.add('spin-effect');
+    setTimeout(() => {
+        calculate.classList.remove('spin-effect');
+        switchWeaponBtn.classList.remove('spin-effect');
+    }, 500);
 });
+
 switchWeaponBtn.addEventListener('click', () => {
+    isRangedAttack = !isRangedAttack;
     const tempBackground = calculate.style.backgroundImage;
     calculate.style.backgroundImage = switchWeaponBtn.style.backgroundImage;
     switchWeaponBtn.style.backgroundImage = tempBackground;
@@ -404,78 +431,64 @@ switchWeaponBtn.addEventListener('click', () => {
 
 // Модификаторы
 let modifiers = {
+    basicOffense: 1,
+    advancedOffense: 1,
+    expertOffense: 1,
+    basicDefense: 1,
+    advancedDefense: 1,
+    expertDefense: 1,
     shooting: 1,
-    longRange: 1,
-    Defense: 1,
-    Attack: 1,
+    retribution: 1,
+    evasion: 1,
+    fogVeil: 1,
+    rangePenalty: 1,
+    neutralRangePenalty: 1,
+    vitality: false,
+    defense: false,
+    holdGround: false,
+    forestRage: false,
+    homeRoad: false,
     frenzy: false,
     ringOfLife: false
 };
+document.getElementById('range-penalty').addEventListener('click', function (event) {
+    const isActive = this.classList.toggle('active');
+    this.dataset.tooltip = isActive ? "Стрельба со штрафом" : "Стрельба без штрафа";
+    event.stopPropagation();
+});
+
+const idToModifierMap = {
+    'basic-offense': 'basicOffense',
+    'advanced-offense': 'advancedOffense',
+    'expert-offense': 'expertOffense',
+    'basic-defense': 'basicDefense',
+    'advanced-defense': 'advancedDefense',
+    'expert-defense': 'expertDefense',
+    'shooting': 'shooting',
+    'retribution': 'retribution',
+    'evasion': 'evasion',
+    'fog-veil': 'fogVeil',
+    'range-penalty': 'rangePenalty',
+    'neutral-range-penalty': 'neutralRangePenalty'
+};
+
 document.querySelectorAll('.modifiers-column').forEach(column => {
     column.addEventListener('click', (event) => {
         if (event.target.classList.contains('modifier')) {
             const isAbilityRow = column.classList.contains('ability');
             const isActive = event.target.classList.contains('active');
-            if (isAbilityRow) {
-                column.querySelectorAll('.modifier').forEach(mod => mod.classList.remove('active'));
-            }
-            if (!isAbilityRow || !isActive) {
-                event.target.classList.toggle('active');
+            if (event.target.id !== 'range-penalty') {
+                if (isAbilityRow) {
+                    column.querySelectorAll('.modifier').forEach(mod => mod.classList.remove('active'));
+                }
+                if (!isAbilityRow || !isActive) {
+                    event.target.classList.toggle('active');
+                }
             }
         }
     });
 });
 
-// Переменная для отслеживания состояния кнопки "Смена стороны"
-let isSwitchingSides = false;
-
-// Кнопка смены стороны
-document.getElementById('switch-sides').addEventListener('click', function () {
-    isSwitchingSides = !isSwitchingSides;
-    this.classList.toggle('active');
-});
-
-document.getElementById('shooting').addEventListener('click', function () {
-    modifiers.shooting = modifiers.shooting === 1 ? 1.2 : 1;
-    this.classList.toggle('active');
-});
-
-document.getElementById('long-range-attack').addEventListener('click', function () {
-    modifiers.longRange = modifiers.longRange === 1 ? 0.5 : 1;
-    this.classList.toggle('active');
-});
-
-document.getElementById('ring-of-life').addEventListener('click', function () {
-    // Переключаем состояние модификатора
-    modifiers.ringOfLife = !modifiers.ringOfLife;
-    const yourHp = document.getElementById('your-health');
-    if (modifiers.ringOfLife) {
-        // При активации увеличиваем текущие значения на 2
-        yourHp.value = (parseInt(yourHp.value) + 2).toString();
-    } else {
-        // При деактивации возвращаем текущие значения к оригинальным (уменьшаем на 2)
-        yourHp.value = (parseInt(yourHp.value) - 2).toString();
-    }
-    // Переключаем CSS-класс активности
-    this.classList.toggle('active');
-});
-document.getElementById('frenzy').addEventListener('click', function () {
-    // Переключаем состояние модификатора
-    modifiers.frenzy = !modifiers.frenzy;
-    const yourMinField = document.getElementById('your-min-damage');
-    const yourMaxField = document.getElementById('your-max-damage');
-    if (modifiers.frenzy) {
-        // При активации увеличиваем текущие значения на 1
-        yourMinField.value = (parseInt(yourMinField.value) + 1).toString();
-        yourMaxField.value = (parseInt(yourMaxField.value) + 1).toString();
-    } else {
-        // При деактивации возвращаем текущие значения к оригинальным (уменьшаем на 1)
-        yourMinField.value = (parseInt(yourMinField.value) - 1).toString();
-        yourMaxField.value = (parseInt(yourMaxField.value) - 1).toString();
-    }
-    // Переключаем CSS-класс активности
-    this.classList.toggle('active');
-});
 
     // Расчет урона
 document.getElementById('calculate').addEventListener('click', function () {
@@ -495,31 +508,88 @@ document.getElementById('calculate').addEventListener('click', function () {
     const neutralQuantity = parseInt(document.getElementById('neutral-quantity').value) || 1;
     const neutralHealth = parseInt(document.getElementById('neutral-health').value) || 1;
 
+    // Сброс модификаторов
+    for (let key in modifiers) {
+        if (typeof modifiers[key] === 'number') {
+            modifiers[key] = 1;
+        }
+    }
+
+    // Применение активных модификаторов
+    document.querySelectorAll('.modifier.active').forEach(mod => {
+        const modKey = idToModifierMap[mod.id];  // Получаем ключ словаря по id кнопки
+
+        if (modKey) {
+            switch (modKey) {
+                case 'basicOffense':
+                    modifiers[modKey] = 1.05;
+                    break;
+                case 'advancedOffense':
+                    modifiers[modKey] = 1.1;
+                    break;
+                case 'expertOffense':
+                    modifiers[modKey] = 1.15;
+                    break;
+                case 'basicDefense':
+                    modifiers[modKey] = 0.9;
+                    break;
+                case 'advancedDefense':
+                    modifiers[modKey] = 0.8;
+                    break;
+                case 'expertDefense':
+                    modifiers[modKey] = 0.7;
+                    break;
+                case 'shooting':
+                    modifiers[modKey] = 1.2;
+                    break;
+                case 'retribution':
+                    modifiers[modKey] = 1 + 0.05 * (parseInt(document.getElementById('hero-FS').value) || 0);
+                    break;
+                case 'evasion':
+                    modifiers[modKey] = 0.8;
+                    break;
+                case 'fogVeil':
+                    modifiers[modKey] = 0.8;
+                    break;
+                case 'rangePenalty':
+                    modifiers[modKey] = 0.5;
+                    break;
+                case 'neutralRangePenalty':
+                    modifiers[modKey] = 0.5;
+                    break;
+            }
+        }
+    });
     // Коэффициенты модификаторов
-    const damageMultiplier = modifiers.shooting * modifiers.longRange;
+    const yourRangedModifiers = modifiers.rangePenalty*modifiers.shooting*modifiers.retribution;
+    const yourMeleeModifiers = modifiers.basicOffense*modifiers.advancedOffense*modifiers.expertOffense*modifiers.retribution;
+    const neutralRangedModifiers = modifiers.neutralRangePenalty*modifiers.fogVeil*modifiers.evasion;
+    const neutralMeleeModifiers = modifiers.basicDefense*modifiers.advancedDefense*modifiers.expertDefense;
     let minDamage, maxDamage, killedUnits;
     if (isSwitchingSides) {
         // Нейтральная сторона атакует
+        const finalModifiers = isRangedAttack ? neutralRangedModifiers : neutralMeleeModifiers;
         if (neutralAttack >= yourDefense) {
-            minDamage = neutralMin * neutralQuantity * (1 + (neutralAttack - yourDefense) * 0.05) * damageMultiplier;
-            maxDamage = neutralMax * neutralQuantity * (1 + (neutralAttack - yourDefense) * 0.05) * damageMultiplier;
+            minDamage = neutralMin * neutralQuantity * (1 + (neutralAttack - yourDefense) * 0.05) * finalModifiers;
+            maxDamage = neutralMax * neutralQuantity * (1 + (neutralAttack - yourDefense) * 0.05) * finalModifiers;
         } else {
-            minDamage = neutralMin * neutralQuantity / (1 + (yourDefense - neutralAttack) * 0.05) * damageMultiplier;
-            maxDamage = neutralMax * neutralQuantity / (1 + (yourDefense - neutralAttack) * 0.05) * damageMultiplier;
+            minDamage = neutralMin * neutralQuantity / (1 + (yourDefense - neutralAttack) * 0.05) * finalModifiers;
+            maxDamage = neutralMax * neutralQuantity / (1 + (yourDefense - neutralAttack) * 0.05) * finalModifiers;
         }
         killedUnits = `${Math.floor(minDamage / yourHealth)}-${Math.floor(maxDamage / yourHealth)}`;
     } else {
         // Ваша сторона атакует
+        const finalModifiers = isRangedAttack ? yourRangedModifiers : yourMeleeModifiers;
         if (yourAttack >= neutralDefense) {
-            minDamage = yourMin * yourQuantity * (1 + (yourAttack - neutralDefense) * 0.05) * damageMultiplier;
-            maxDamage = yourMax * yourQuantity * (1 + (yourAttack - neutralDefense) * 0.05) * damageMultiplier;
+            minDamage = yourMin * yourQuantity * (1 + (yourAttack - neutralDefense) * 0.05) * finalModifiers;
+            maxDamage = yourMax * yourQuantity * (1 + (yourAttack - neutralDefense) * 0.05) * finalModifiers;
         } else {
-            minDamage = yourMin * yourQuantity / (1 + (neutralDefense - yourAttack) * 0.05) * damageMultiplier;
-            maxDamage = yourMax * yourQuantity / (1 + (neutralDefense - yourAttack) * 0.05) * damageMultiplier;
+            minDamage = yourMin * yourQuantity / (1 + (neutralDefense - yourAttack) * 0.05) * finalModifiers;
+            maxDamage = yourMax * yourQuantity / (1 + (neutralDefense - yourAttack) * 0.05) * finalModifiers;
         }
         killedUnits = `${Math.floor(minDamage / neutralHealth)}-${Math.floor(maxDamage / neutralHealth)}`;
     }
-
-    document.getElementById('damage-result').textContent = `${Math.round(minDamage)}-${Math.round(maxDamage)}`;
+    // Обновляем результаты на странице
+    document.getElementById('damage-result').textContent = `${Math.floor(minDamage)}-${Math.floor(maxDamage)}`;
     document.getElementById('kill-result').textContent = killedUnits;
 });

@@ -3,6 +3,10 @@
     src: url("fonts/Monotype-Corsiva-Bold-Italic.woff2") format("woff2"),
          url("fonts/Monotype-Corsiva-Bold-Italic.ttf") format("truetype");
 }
+@keyframes rotate {
+    0% { transform: rotateY(0); }
+    50% { transform: rotateY(180deg); }
+}
 
 * {
     box-sizing: border-box;
@@ -203,7 +207,7 @@ input[type="number"]::-webkit-outer-spin-button {
     font-family: "Corsiva";
     content: attr(data-tooltip); 
     position: absolute;
-    bottom: 120%;
+    bottom: 103%;
     left: 50%;
     transform: translateX(-50%);
     background: #322A21;
@@ -211,7 +215,7 @@ input[type="number"]::-webkit-outer-spin-button {
     padding: 4% 8%;
     border: 1px solid #8D6035;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 11px;
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
@@ -336,8 +340,8 @@ input[type="number"]::-webkit-outer-spin-button {
 .action-button:hover {
     transform: scale(1.05);
 }
-.flipped {
-    transform: scaleX(-1);
+.spin-effect {
+    animation: rotate 0.5s ease-in-out;
 }
 .result-container {
     display: flex;
@@ -396,10 +400,16 @@ input[type="number"]::-webkit-outer-spin-button {
 #fog-veil{
     background-image: url('img/fogVeil.png');
 }
-#straight-arrow{
+#range-penalty{
     background-image: url('img/straight_arrow.png');
 }
-#broken-arrow{
+#range-penalty.active{
+    background-image: url('img/broken_arrow.png');
+}
+#neutral-range-penalty{
+    background-image: url('img/straight_arrow.png');
+}
+#neutral-range-penalty.active{
     background-image: url('img/broken_arrow.png');
 }
 #no-melee-penalty{
@@ -408,18 +418,15 @@ input[type="number"]::-webkit-outer-spin-button {
 #home-road{
     background-image: url('img/roadHome.png');
 }
+#neutral-home-road{
+    background-image: url('img/roadHome.png');
+}
 #ability{
     background-image: url('img/ability.png');
 }
 #switch-sides{
     background-image: url('img/change2.png');
 }
-/* #switch-weapon{
-    background-image: url('img/arrow_button.png');
-}
-#calculate{
-    background-image: url('img/sword.png');
-} */
 /* Адаптивные стили */
 @media (max-width: 767px) {
     .columns {
