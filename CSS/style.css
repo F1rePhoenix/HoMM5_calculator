@@ -427,6 +427,15 @@ input[type="number"]::-webkit-outer-spin-button {
 #switch-sides{
     background-image: url('img/change2.png');
 }
+#bloody-claw{
+    background-image: url('img/bloodyClaw.png');
+}
+#ring-of-life1{
+    background-image: url('img/RingofLife.png');
+}
+#ring-of-life2{
+    background-image: url('img/RingofLife.png');
+}
 /* Адаптивные стили */
 @media (max-width: 767px) {
     .columns {

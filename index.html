@@ -69,7 +69,7 @@
                             <div class="modifiers-column">
                                 <button class="modifier" id = "vitality" data-tooltip="Стойкость"></button>
                                 <button class="modifier" id = "evasion" data-tooltip="Уклонение"></button>
-                                <button class="modifier" id = "defense" data-tooltip="Оборона"></button>
+                                <button class="modifier" id = "hold-ground" data-tooltip="Глухая оборона"></button>
                             </div>
                         </div>
                     
@@ -79,18 +79,22 @@
                                 <input type="number" id="your-quantity" placeholder="Кол-во">
                             </div>
                             <div class="modifiers-column">
-                                <button class="modifier" id = "hold-ground" data-tooltip="Глухая оборона"></button>
                                 <button class="modifier" id = "forest-rage" data-tooltip="Лесная ярость"></button>
                                 <button class="modifier" id = "fog-veil" data-tooltip="Туманная завеса"></button>
+                                <button class="modifier" id="home-road" data-tooltip="Родные земли"></button>
                             </div>
                         </div>
                         <div class="input-row">
                             <div class="label-column"></div>
-                            <div class="input-column"></div>
                             <div class="modifiers-column">
-                                <button class="modifier" id="home-road" data-tooltip="Родные земли"></button>
+                                <button class="modifier" style="visibility: hidden;"></button>
+                                <button class="modifier" id = "defense" data-tooltip="Оборона"></button>
                                 <button class="modifier" id="range-penalty" data-tooltip="Стрельба без штрафа"></button>
-                                <button class="modifier"></button>
+                            </div>
+                            <div class="modifiers-column">
+                                <button class="modifier" id="bloody-claw" data-tooltip="Ожерелье кровавого когтя"></button>
+                                <button class="modifier" id = "ring-of-life1" data-tooltip="Кольцо жизни"></button>
+                                <button class="modifier" id="ring-of-life2" data-tooltip="Кольцо жизни"></button>
                             </div>
                         </div>
                     </div>
@@ -149,10 +153,10 @@
                             <div class="input-column">
                                 <input type="number" id="neutral-attack" placeholder="Нападение">
                             </div>
-                            <div class="modifiers-column ability">
+                            <div class="modifiers-column">
                                 <button class="modifier" id="neutral-range-penalty" data-tooltip="Стрельба без штрафа"></button>
-                                <button class="modifier" id = "fog-veil" data-tooltip="Туманная завеса"></button>
                                 <button class="modifier" id="neutral-home-road" data-tooltip="Родные земли"></button>
+                                <button class="modifier" style="visibility: hidden;"></button>
                             </div>
                         </div>
                     

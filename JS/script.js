@@ -388,7 +388,25 @@ yourUnitSelect.addEventListener('change', () => {
     document.getElementById('your-health').value = selectedUnit.health;
     const imgElement = document.getElementById('your-unit-image');
     imgElement.src = selectedUnit.image;
+    applyActiveModifiers();
 });
+const heroAttackInput = document.getElementById('hero-attack');
+const heroDefenseInput = document.getElementById('hero-defense');
+
+// Функция обновления характеристик
+function updateHeroStats() {
+    const selectedUnit = units[yourFactionSelect.value][yourTierSelect.value][yourUnitSelect.value];
+    const heroAttack = parseInt(document.getElementById('hero-attack').value) || 0;
+    const heroDefense = parseInt(document.getElementById('hero-defense').value) || 0;
+    if (typeof selectedUnit !== 'undefined') {
+        const finalAttack = selectedUnit.attack + heroAttack;
+        const finalDefense = selectedUnit.defense + heroDefense;
+        document.getElementById('your-attack').value = finalAttack;
+        document.getElementById('your-defense').value = finalDefense;
+    }
+}
+heroAttackInput.addEventListener('blur', updateHeroStats);
+heroDefenseInput.addEventListener('blur', updateHeroStats);
 //  кнопки "Смена стороны" и "Смена типа атаки"
 let isSwitchingSides = false;
 let isRangedAttack = false;
@@ -443,20 +461,96 @@ let modifiers = {
     fogVeil: 1,
     rangePenalty: 1,
     neutralRangePenalty: 1,
-    vitality: false,
-    defense: false,
-    holdGround: false,
-    forestRage: false,
-    homeRoad: false,
-    frenzy: false,
-    ringOfLife: false
 };
 document.getElementById('range-penalty').addEventListener('click', function (event) {
     const isActive = this.classList.toggle('active');
     this.dataset.tooltip = isActive ? "Стрельба со штрафом" : "Стрельба без штрафа";
     event.stopPropagation();
 });
+const modifiersFunctions = {
+    'frenzy': applyFrenzyModifier,
+    'vitality': applyVitalityModifier,
+    'home-road': applyHomeRoadModifier,
+    'neutral-home-road': applyNeutralHomeRoadModifier,
+    'defense': applyDefenseModifier,
+    'forest-rage': applyForestRageModifier,
+    'bloody-claw': applyFrenzyModifier,
+    'ring-of-life1':applyVitalityModifier,
+    'ring-of-life2':applyVitalityModifier
+};
+function applyActiveModifiers() {
+    document.querySelectorAll('.modifier.active').forEach(modifier => {
+        const id = modifier.id;
+        if (modifiersFunctions[id]) {
+            modifiersFunctions[id](true);
+        }
+    });
+}
+function applyDefenseModifier(isActive) {
+    const yourDefenseField = document.getElementById('your-defense');
+    const isHoldGroundActive = document.getElementById('hold-ground').classList.contains('active');
+    const selectedUnitName = yourUnitSelect.options[yourUnitSelect.selectedIndex].text;
+    const isAncientEnt = selectedUnitName === 'Древние энты';
+    let baseDefense = parseInt(yourDefenseField.value) || 0;
+    let defenseBonus = 0;
+    if (isActive) {
+        if (isAncientEnt && isHoldGroundActive) {
+            defenseBonus = Math.floor(baseDefense);  
+        } else if (isAncientEnt) {
+            defenseBonus = Math.floor(baseDefense * 0.5);
+        } else if (isHoldGroundActive) {
+            defenseBonus = Math.floor(baseDefense * 0.6);
+        } else {
+            defenseBonus = Math.floor(baseDefense * 0.3);
+        }
+        yourDefenseField.value = baseDefense + defenseBonus;
+        yourDefenseField.dataset.baseDefense = baseDefense;
+    } else {
+        yourDefenseField.value = yourDefenseField.dataset.baseDefense || baseDefense;
+    }
+}
 
+function applyFrenzyModifier(isActive) {
+    const yourMinField = document.getElementById('your-min-damage');
+    const yourMaxField = document.getElementById('your-max-damage');
+    const minDamage = parseInt(yourMinField.value) || 0;
+    const maxDamage = parseInt(yourMaxField.value) || 0;
+    yourMinField.value = isActive ? minDamage + 1 : minDamage - 1;
+    yourMaxField.value = isActive ? maxDamage + 1 : maxDamage - 1;
+}
+
+function applyVitalityModifier(isActive) {
+    const healthField = document.getElementById('your-health');
+    const currentHealth = parseInt(healthField.value) || 0;
+    healthField.value = isActive ? currentHealth + 2 : currentHealth - 2;
+}
+
+function applyHomeRoadModifier(isActive) {
+    const attackField = document.getElementById('your-attack');
+    const defenseField = document.getElementById('your-defense');
+    const currentAttack = parseInt(attackField.value) || 0;
+    const currentDefense = parseInt(defenseField.value) || 0;
+    attackField.value = isActive ? currentAttack + 1 : currentAttack - 1;
+    defenseField.value = isActive ? currentDefense + 1 : currentDefense - 1;
+}
+
+function applyNeutralHomeRoadModifier(isActive) {
+    const attackField = document.getElementById('neutral-attack');
+    const defenseField = document.getElementById('neutral-defense');
+    const currentAttack = parseInt(attackField.value) || 0;
+    const currentDefense = parseInt(defenseField.value) || 0;
+    attackField.value = isActive ? currentAttack + 1 : currentAttack - 1;
+    defenseField.value = isActive ? currentDefense + 1 : currentDefense - 1;
+}
+
+function applyForestRageModifier(isActive) {
+    const yourMaxField = document.getElementById('your-max-damage');
+    const selectedFaction = yourFactionSelect.options[yourFactionSelect.selectedIndex].text;
+    const baseMaxDamage = parseInt(yourMaxField.value) || 0;
+    if (selectedFaction === 'Лесной союз' && baseMaxDamage > 0) {
+        yourMaxField.value = isActive ? baseMaxDamage + 1 : baseMaxDamage - 1;
+    }
+}
 const idToModifierMap = {
     'basic-offense': 'basicOffense',
     'advanced-offense': 'advancedOffense',
@@ -483,6 +577,10 @@ document.querySelectorAll('.modifiers-column').forEach(column => {
                 }
                 if (!isAbilityRow || !isActive) {
                     event.target.classList.toggle('active');
+                    const modifierFunction = modifiersFunctions[event.target.id];
+                    if (modifierFunction) {
+                        modifierFunction(!isActive);
+                    }
                 }
             }
         }
