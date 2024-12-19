@@ -140,7 +140,7 @@ const units = {
     "6": [
         { name: "Энты", attack: 19, defense: 27, damage: "7-17", health: 175, image: "CSS/img/Units/Elves/X4T6G0.png", unitData: 0 },
         { name: "Древние энты", attack: 19, defense: 29, damage: "10-20", health: 181, image: "CSS/img/Units/Elves/X4T6G1.png", unitData: 0 },
-        { name: "Дикие энты", attack: 21, defense: 27, damage: "12-20", health: 175, image: "CSS/img/Units/Elves/X4T6G2.png", unitData: 0 }
+        { name: "Дикие энты", attack: 21, defense: 27, damage: "12-20", health: 175, image: "CSS/img/Units/Elves/X4T6G2.png", unitData: 10 }
     ],
     "7": [
         { name: "Зеленые драконы", attack: 27, defense: 25, damage: "30-50", health: 200, image: "CSS/img/Units/Elves/X4T7G0.png", unitData: 0 },
@@ -525,7 +525,8 @@ const modifiersFunctions = {
     'bloody-claw': applyFrenzyModifier,
     'bloody-claw': applyFrenzyModifier,
     'ring-of-life1':applyVitalityModifier,
-    'ring-of-life2':applyVitalityModifier
+    'ring-of-life2':applyVitalityModifier,
+    'forest-rage-ent': applyForestRageEntModifier
 };
 const modifiersNeutralFunctions = {
     'neutral-home-road': applyNeutralHomeRoadModifier,
@@ -625,9 +626,32 @@ function applyForestRageModifier(isActive) {
         yourMaxField.value = isActive ? baseMaxDamage + 1 : baseMaxDamage - 1;
     }
 }
+function applyForestRageEntModifier(isActive) {
+    const yourAttackField = document.getElementById('your-attack');
+    const yourDefenseField = document.getElementById('your-defense');
+    let baseAttack = parseInt(yourAttackField.value);
+    let baseDefense = parseInt(yourDefenseField.value);
+    let transferredDefense = Math.floor(baseDefense / 2);
+    if (isActive) {
+        yourAttackField.dataset.baseAttack = baseAttack;
+        yourDefenseField.dataset.baseDefense = baseDefense;
+        yourAttackField.value = baseAttack + transferredDefense;
+        yourDefenseField.value = baseDefense - transferredDefense;
+    } else {
+        yourAttackField.value = yourAttackField.dataset.baseAttack || baseAttack;
+        yourDefenseField.value = yourDefenseField.dataset.baseDefense || baseDefense;
+    }
+}
+function removeUnitAbility(){
+    abilityButton = document.querySelector('.unit-ability')
+    abilityButton.style.visibility = 'hidden';
+    abilityButton.removeAttribute('id');
+    abilityButton.dataset.tooltip = '';
+}
 function applyUnitDataModifiers() {
     const selectedUnit = units[yourFactionSelect.value][yourTierSelect.value][yourUnitSelect.value];
     const unitDataIndex = selectedUnit.unitData || 0;
+    removeUnitAbility()
     switch (unitDataIndex) {
         case 0: // Юнит ближнего боя
             break;
@@ -666,6 +690,12 @@ function applyUnitDataModifiers() {
         case 9: // Удар бури у танов и эрлов
             hiddenModifiers.blowStorm = 2;
             console.log(hiddenModifiers.blowStorm)
+            break;
+        case 10: // Способность ярость леса у Диких энтов
+            abilityButton = document.querySelector('.unit-ability')
+            abilityButton.style.visibility = 'visible';
+            abilityButton.id = 'forest-rage-ent';
+            abilityButton.dataset.tooltip = 'Ярость леса';
             break;
     }
 }
@@ -712,6 +742,7 @@ function applyNeutralArcherModifiers() {
             break;
     }
 }
+
 document.querySelectorAll('.modifiers-column').forEach(column => {
     column.addEventListener('click', (event) => {
         if (event.target.classList.contains('modifier')) {

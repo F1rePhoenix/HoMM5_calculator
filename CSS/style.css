@@ -15,19 +15,22 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #E7B26B;
+    /* background-color: #E7B26B; */
     font-family: "Corsiva";
     color: #294761;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
+    background-image: url('img/background.png'); /* Путь к файлу текстуры */
+    background-size: cover; /* Это обеспечит покрытие всей страницы */
+    background-repeat: repeat; /* Если текстура меньше, чем экран, она будет повторяться */
+    background-position: center; /* Центрирует фон */
 }
 
 .container {
     width: 90%; 
     max-width: 1200px;
-    background-color: #E7B26B;
 }
 
 h1 {
@@ -356,8 +359,11 @@ input[type="number"]::-webkit-outer-spin-button {
     font-size: 24px;
 }
 .glowing-border {
-    box-shadow: 0 0 15px #5245ff, 0 0 20px #5245ff;
+    box-shadow: 0 0 15px #F3A316, 0 0 20px #F3A316;
   }
+.unit-ability{
+    background-image: url('img/ability.png');
+}
 #basic-offense{
     background-image: url('img/basicOffense.png');
 }
@@ -423,9 +429,6 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 #neutral-home-road{
     background-image: url('img/roadHome.png');
-}
-#ability{
-    background-image: url('img/ability.png');
 }
 #switch-sides{
     background-image: url('img/change2.png');
