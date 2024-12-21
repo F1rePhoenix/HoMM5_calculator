@@ -6,7 +6,7 @@ const units = {
             { name: "Лендлорды", attack: 2, defense: 1, damage: "1-2", health: 6, image: "CSS/img/Units/Humans/X1T1G2.png", unitData: 0 }
         ],
         "2": [
-            { name: "Лучники", attack: 4, defense: 3, damage: "2-4", health: 7, image: "CSS/img/Units/Humans/X1T2G0.png", unitData: 1 },
+            { name: "Лучники", attack: 4, defense: 3, damage: "2-4", health: 7, image: "CSS/img/Units/Humans/X1T2G0.png", unitData: 12 },
             { name: "Арбалетчики", attack: 4, defense: 4, damage: "2-8", health: 10, image: "CSS/img/Units/Humans/X1T2G1.png", unitData: 1 },
             { name: "Стрелки", attack: 5, defense: 4, damage: "2-8", health: 10, image: "CSS/img/Units/Humans/X1T2G2.png", unitData: 2 }
         ],
@@ -16,8 +16,8 @@ const units = {
             { name: "Ревнитель веры", attack: 8, defense: 8, damage: "2-5", health: 26, image: "CSS/img/Units/Humans/X1T3G2.png", unitData: 0 }
         ],
         "4": [
-            { name: "Грифоны", attack: 7, defense: 5, damage: "5-10", health: 30, image: "CSS/img/Units/Humans/X1T4G0.png", unitData: 0 },
-            { name: "Королевские грифоны", attack: 9, defense: 8, damage: "5-15", health: 35, image: "CSS/img/Units/Humans/X1T4G1.png", unitData: 0 },
+            { name: "Грифоны", attack: 7, defense: 5, damage: "5-10", health: 30, image: "CSS/img/Units/Humans/X1T4G0.png", unitData: 11 },
+            { name: "Королевские грифоны", attack: 9, defense: 8, damage: "5-15", health: 35, image: "CSS/img/Units/Humans/X1T4G1.png", unitData: 11 },
             { name: "Боевые грифоны", attack: 7, defense: 12, damage: "6-12", health: 52, image: "CSS/img/Units/Humans/X1T4G2.png", unitData: 0 }
         ],
         "5": [
@@ -226,7 +226,7 @@ const units = {
     "1": [
         { name: "Защитники гор", attack: 1, defense: 4, damage: "1-1", health: 7, image: "CSS/img/Units/Dwarfs/X7T1G0.png", unitData: 0 },
         { name: "Воители", attack: 1, defense: 5, damage: "1-2", health: 12, image: "CSS/img/Units/Dwarfs/X7T1G1.png", unitData: 0 },
-        { name: "Горные стражи", attack: 2, defense: 6, damage: "1-2", health: 14, image: "CSS/img/Units/Dwarfs/X7T1G2.png", unitData: 0 }
+        { name: "Горные стражи", attack: 2, defense: 6, damage: "1-2", health: 14, image: "CSS/img/Units/Dwarfs/X7T1G2.png", unitData: 13 }
     ],
     "2": [
         { name: "Метатели копья", attack: 4, defense: 4, damage: "1-2", health: 9, image: "CSS/img/Units/Dwarfs/X7T2G0.png", unitData: 1 },
@@ -462,7 +462,6 @@ function handleSwitchSides() {
     document.getElementById('switch-sides').classList.toggle('active');
     calculate.classList.add('spin-effect');
     switchWeaponBtn.classList.add('spin-effect');
-
     setTimeout(() => {
         calculate.classList.remove('spin-effect');
         switchWeaponBtn.classList.remove('spin-effect');
@@ -502,7 +501,9 @@ let hiddenModifiers = {
     pitLord: 0,
     pitSpawn: 0,
     powerArrow: 1,
-    blowStorm: 1
+    blowStorm: 1,
+    blowHeaven: 1,
+    curvedFire: 1
 }
 
 let neutralHiddenModifiers = {
@@ -513,7 +514,9 @@ let neutralHiddenModifiers = {
     pitLord: 0,
     pitSpawn: 0,
     powerArrow: 1,
-    blowStorm: 1
+    blowStorm: 1,
+    blowHeaven: 1,
+    curvedFire: 1
 }
 
 const modifiersFunctions = {
@@ -696,6 +699,24 @@ function applyUnitDataModifiers() {
             abilityButton.style.visibility = 'visible';
             abilityButton.id = 'forest-rage-ent';
             abilityButton.dataset.tooltip = 'Ярость леса';
+            break;
+        case 11: // Способность удар с небес у грифонов
+            abilityButton = document.querySelector('.unit-ability')
+            abilityButton.style.visibility = 'visible';
+            abilityButton.id = 'forest-rage-ent';
+            abilityButton.dataset.tooltip = 'Удар с небес';
+            break;
+        case 12: // Способность стрельба навесом у лучников
+            abilityButton = document.querySelector('.unit-ability')
+            abilityButton.style.visibility = 'visible';
+            abilityButton.id = 'forest-rage-ent';
+            abilityButton.dataset.tooltip = 'Удар с небес';
+            break;
+        case 13: // Способность оборонительная позиция у горных стражей
+            abilityButton = document.querySelector('.unit-ability')
+            abilityButton.style.visibility = 'visible';
+            abilityButton.id = 'forest-rage-ent';
+            abilityButton.dataset.tooltip = 'Удар с небес';
             break;
     }
 }
