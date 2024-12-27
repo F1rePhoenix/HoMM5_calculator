@@ -364,6 +364,9 @@ input[type="number"]::-webkit-outer-spin-button {
 .unit-ability{
     background-image: url('img/ability.png');
 }
+.neutral-unit-ability{
+    background-image: url('img/ability.png');
+}
 #basic-offense{
     background-image: url('img/basicOffense.png');
 }
@@ -441,6 +444,12 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 #ring-of-life2{
     background-image: url('img/RingofLife.png');
+}
+#big-shield{
+    background-image: url('img/bigShield.png');
+}
+#neutral-big-shield{
+    background-image: url('img/bigShield.png');
 }
 /* Адаптивные стили */
 @media (max-width: 767px) {

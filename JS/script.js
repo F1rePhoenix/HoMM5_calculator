@@ -11,9 +11,9 @@ const units = {
             { name: "Стрелки", attack: 5, defense: 4, damage: "2-8", health: 10, image: "CSS/img/Units/Humans/X1T2G2.png", unitData: 2 }
         ],
         "3": [
-            { name: "Мечники", attack: 4, defense: 8, damage: "2-4", health: 16, image: "CSS/img/Units/Humans/X1T3G0.png", unitData: 0 },
-            { name: "Латники", attack: 5, defense: 9, damage: "2-5", health: 26, image: "CSS/img/Units/Humans/X1T3G1.png", unitData: 0 },
-            { name: "Ревнитель веры", attack: 8, defense: 8, damage: "2-5", health: 26, image: "CSS/img/Units/Humans/X1T3G2.png", unitData: 0 }
+            { name: "Мечники", attack: 4, defense: 8, damage: "2-4", health: 16, image: "CSS/img/Units/Humans/X1T3G0.png", unitData: 14 },
+            { name: "Латники", attack: 5, defense: 9, damage: "2-5", health: 26, image: "CSS/img/Units/Humans/X1T3G1.png", unitData: 14 },
+            { name: "Ревнитель веры", attack: 8, defense: 8, damage: "2-5", health: 26, image: "CSS/img/Units/Humans/X1T3G2.png", unitData: 14 }
         ],
         "4": [
             { name: "Грифоны", attack: 7, defense: 5, damage: "5-10", health: 30, image: "CSS/img/Units/Humans/X1T4G0.png", unitData: 11 },
@@ -77,7 +77,7 @@ const units = {
     "1": [
         { name: "Костяные воины", attack: 1, defense: 2, damage: "1-1", health: 4, image: "CSS/img/Units/Necropolis/X3T1G0.png", unitData: 0 },
         { name: "Костяные лучники", attack: 2, defense: 2, damage: "1-2", health: 5, image: "CSS/img/Units/Necropolis/X3T1G1.png", unitData: 1 },
-        { name: "Костяные воители", attack: 1, defense: 3, damage: "1-2", health: 5, image: "CSS/img/Units/Necropolis/X3T1G2.png", unitData: 0 }
+        { name: "Костяные воители", attack: 1, defense: 3, damage: "1-2", health: 5, image: "CSS/img/Units/Necropolis/X3T1G2.png", unitData: 14 }
     ],
     "2": [
         { name: "Зомби", attack: 1, defense: 2, damage: "1-2", health: 17, image: "CSS/img/Units/Necropolis/X3T2G0.png", unitData: 0 },
@@ -224,8 +224,8 @@ const units = {
     },
     "Подгорный народ": {
     "1": [
-        { name: "Защитники гор", attack: 1, defense: 4, damage: "1-1", health: 7, image: "CSS/img/Units/Dwarfs/X7T1G0.png", unitData: 0 },
-        { name: "Воители", attack: 1, defense: 5, damage: "1-2", health: 12, image: "CSS/img/Units/Dwarfs/X7T1G1.png", unitData: 0 },
+        { name: "Защитники гор", attack: 1, defense: 4, damage: "1-1", health: 7, image: "CSS/img/Units/Dwarfs/X7T1G0.png", unitData: 14 },
+        { name: "Воители", attack: 1, defense: 5, damage: "1-2", health: 12, image: "CSS/img/Units/Dwarfs/X7T1G1.png", unitData: 14 },
         { name: "Горные стражи", attack: 2, defense: 6, damage: "1-2", health: 14, image: "CSS/img/Units/Dwarfs/X7T1G2.png", unitData: 13 }
     ],
     "2": [
@@ -382,6 +382,7 @@ unitSelect.addEventListener('change', () => {
     }
     document.getElementById('neutral-range-penalty').classList.remove('active');
     document.getElementById('neutral-range-penalty').dataset.tooltip = "Стрельба без штрафа";
+    document.getElementById('neutral-big-shield').classList.remove('active');
     applyNeutralArcherModifiers()
     applyNeutralActiveModifiers()
 });
@@ -408,6 +409,7 @@ yourUnitSelect.addEventListener('change', () => {
     }
     document.getElementById('range-penalty').classList.remove('active');
     document.getElementById('range-penalty').dataset.tooltip = "Стрельба без штрафа";
+    document.getElementById('big-shield').classList.remove('active');
     applyUnitDataModifiers();
     applyActiveModifiers();
 });
@@ -491,32 +493,32 @@ let modifiers = {
     fogVeil: 1,
     rangePenalty: 1,
     neutralRangePenalty: 1,
+    blowHeaven: 1,
+    curvedFire: 1,
+    neutralBlowHeaven: 1,
+    neutralCurvedFire: 1,
+    bigShield: 1,
+    neutralBigShield: 1
 };
 
 let hiddenModifiers = {
     doubleShoot: 1,
     meleePenalty: 1,
     rangePenalty2: 1,
-    bigShield: 1,
     pitLord: 0,
     pitSpawn: 0,
     powerArrow: 1,
     blowStorm: 1,
-    blowHeaven: 1,
-    curvedFire: 1
 }
 
 let neutralHiddenModifiers = {
     doubleShoot: 1,
     meleePenalty: 1,
     rangePenalty2: 1,
-    bigShield: 1,
     pitLord: 0,
     pitSpawn: 0,
     powerArrow: 1,
     blowStorm: 1,
-    blowHeaven: 1,
-    curvedFire: 1
 }
 
 const modifiersFunctions = {
@@ -529,10 +531,13 @@ const modifiersFunctions = {
     'bloody-claw': applyFrenzyModifier,
     'ring-of-life1':applyVitalityModifier,
     'ring-of-life2':applyVitalityModifier,
-    'forest-rage-ent': applyForestRageEntModifier
+    'forest-rage-ent': applyForestRageEntModifier,
+    'defensive-position': applyDefensivePositionModifier
 };
 const modifiersNeutralFunctions = {
     'neutral-home-road': applyNeutralHomeRoadModifier,
+    'neutral-forest-rage-ent': applyNeutralForestRageEntModifier,
+    'neutral-defensive-position': applyNeutralDefensivePositionModifier
 };
 const idToModifierMap = {
     'basic-offense': 'basicOffense',
@@ -546,7 +551,13 @@ const idToModifierMap = {
     'evasion': 'evasion',
     'fog-veil': 'fogVeil',
     'range-penalty': 'rangePenalty',
-    'neutral-range-penalty': 'neutralRangePenalty'
+    'neutral-range-penalty': 'neutralRangePenalty',
+    'blow-heaven': 'blowHeaven',
+    'neutral-blow-heaven': 'neutralBlowHeaven',
+    'curved-fire': 'curvedFire',
+    'neutral-curved-fire': 'neutralCurvedFire',
+    'big-shield': 'bigShield',
+    'neutral-big-shield': 'neutralBigShield'
 };
 function applyActiveModifiers() {
     document.querySelectorAll('.modifier.active').forEach(modifier => {
@@ -645,18 +656,53 @@ function applyForestRageEntModifier(isActive) {
         yourDefenseField.value = yourDefenseField.dataset.baseDefense || baseDefense;
     }
 }
+function applyNeutralForestRageEntModifier(isActive) {
+    const yourAttackField = document.getElementById('your-attack');
+    const yourDefenseField = document.getElementById('your-defense');
+    let baseAttack = parseInt(yourAttackField.value);
+    let baseDefense = parseInt(yourDefenseField.value);
+    let transferredDefense = Math.floor(baseDefense / 2);
+    if (isActive) {
+        yourAttackField.dataset.baseAttack = baseAttack;
+        yourDefenseField.dataset.baseDefense = baseDefense;
+        yourAttackField.value = baseAttack + transferredDefense;
+        yourDefenseField.value = baseDefense - transferredDefense;
+    } else {
+        yourAttackField.value = yourAttackField.dataset.baseAttack || baseAttack;
+        yourDefenseField.value = yourDefenseField.dataset.baseDefense || baseDefense;
+    }
+}
+function applyDefensivePositionModifier(isActive) {
+    const defenseField = document.getElementById('your-defense');
+    const currentDefense = parseInt(defenseField.value) || 0;
+    defenseField.value = isActive ? currentDefense + 7 : currentDefense - 7;
+}
+function applyNeutralDefensivePositionModifier(isActive) {
+    const defenseField = document.getElementById('neutral-defense');
+    const currentDefense = parseInt(defenseField.value) || 0;
+    defenseField.value = isActive ? currentDefense + 7 : currentDefense - 7;
+}
 function removeUnitAbility(){
     abilityButton = document.querySelector('.unit-ability')
     abilityButton.style.visibility = 'hidden';
     abilityButton.removeAttribute('id');
+    abilityButton.classList.remove('active');
+    abilityButton.dataset.tooltip = '';
+}
+function removeNeutralUnitAbility(){
+    abilityButton = document.querySelector('.neutral-unit-ability')
+    abilityButton.style.visibility = 'hidden';
+    abilityButton.removeAttribute('id');
+    abilityButton.classList.remove('active');
     abilityButton.dataset.tooltip = '';
 }
 function applyUnitDataModifiers() {
     const selectedUnit = units[yourFactionSelect.value][yourTierSelect.value][yourUnitSelect.value];
     const unitDataIndex = selectedUnit.unitData || 0;
-    removeUnitAbility()
+    removeUnitAbility();
     switch (unitDataIndex) {
         case 0: // Юнит ближнего боя
+
             break;
         case 1: // Стрелок
             document.getElementById('range-penalty').classList.add('active');
@@ -688,6 +734,7 @@ function applyUnitDataModifiers() {
             hiddenModifiers.pitSpawn = 2;
             break;
         case 8: // Усиленная стрела у лесных стрелков
+            hiddenModifiers.meleePenalty = 0.5;
             hiddenModifiers.powerArrow = 0.667;
             break;
         case 9: // Удар бури у танов и эрлов
@@ -703,26 +750,34 @@ function applyUnitDataModifiers() {
         case 11: // Способность удар с небес у грифонов
             abilityButton = document.querySelector('.unit-ability')
             abilityButton.style.visibility = 'visible';
-            abilityButton.id = 'forest-rage-ent';
+            abilityButton.id = 'blow-heaven';
             abilityButton.dataset.tooltip = 'Удар с небес';
             break;
         case 12: // Способность стрельба навесом у лучников
+            document.getElementById('range-penalty').classList.add('active');
+            document.getElementById('range-penalty').dataset.tooltip = "Стрельба со штрафом";
+            hiddenModifiers.meleePenalty = 0.5;
             abilityButton = document.querySelector('.unit-ability')
             abilityButton.style.visibility = 'visible';
-            abilityButton.id = 'forest-rage-ent';
-            abilityButton.dataset.tooltip = 'Удар с небес';
+            abilityButton.id = 'curved-fire';
+            abilityButton.dataset.tooltip = 'Стрельба навесом';
             break;
         case 13: // Способность оборонительная позиция у горных стражей
+            document.getElementById('big-shield').classList.add('active');
             abilityButton = document.querySelector('.unit-ability')
             abilityButton.style.visibility = 'visible';
-            abilityButton.id = 'forest-rage-ent';
-            abilityButton.dataset.tooltip = 'Удар с небес';
+            abilityButton.id = 'defensive-position';
+            abilityButton.dataset.tooltip = 'Оборонительная позиция';
+            break;
+        case 14: // Юниты со способностью большой щит
+            document.getElementById('big-shield').classList.add('active');
             break;
     }
 }
 function applyNeutralArcherModifiers() {
     const selectedUnit = units[factionSelect.value][tierSelect.value][unitSelect.value];
     const unitDataIndex = selectedUnit.unitData || 0;
+    removeNeutralUnitAbility();
     switch (unitDataIndex) {
         case 0: // Юнит ближнего боя
             break;
@@ -756,10 +811,42 @@ function applyNeutralArcherModifiers() {
             neutralHiddenModifiers.pitSpawn = 2;
             break;
         case 8: // Усиленная стрела у лесных стрелков
+            neutralHiddenModifiers.meleePenalty = 0.5;
             neutralHiddenModifiers.powerArrow = 0.667;
             break;
         case 9: // Удар бури у танов и эрлов
             neutralHiddenModifiers.blowStorm = 2;
+            break;
+        case 10: // Способность ярость леса у Диких энтов
+            abilityButton = document.querySelector('.neutral-unit-ability')
+            abilityButton.style.visibility = 'visible';
+            abilityButton.id = 'neutral-forest-rage-ent';
+            abilityButton.dataset.tooltip = 'Ярость леса';
+            break;
+        case 11: // Способность удар с небес у грифонов
+            abilityButton = document.querySelector('.neutral-unit-ability')
+            abilityButton.style.visibility = 'visible';
+            abilityButton.id = 'neutral-blow-heaven';
+            abilityButton.dataset.tooltip = 'Удар с небес';
+            break;
+        case 12: // Способность стрельба навесом у лучников
+            document.getElementById('neutral-range-penalty').classList.add('active');
+            document.getElementById('neutral-range-penalty').dataset.tooltip = "Стрельба со штрафом";
+            neutralHiddenModifiers.meleePenalty = 0.5;
+            abilityButton = document.querySelector('.neutral-unit-ability')
+            abilityButton.style.visibility = 'visible';
+            abilityButton.id = 'neutral-curved-fire';
+            abilityButton.dataset.tooltip = 'Стрельба навесом';
+            break;
+        case 13: // Способность оборонительная позиция у горных стражей
+            document.getElementById('neutral-big-shield').classList.add('active');
+            abilityButton = document.querySelector('.neutral-unit-ability')
+            abilityButton.style.visibility = 'visible';
+            abilityButton.id = 'neutral-defensive-position';
+            abilityButton.dataset.tooltip = 'Оборонительная позиция';
+            break;
+        case 14: // Юниты со способностью большой щит
+            document.getElementById('neutral-big-shield').classList.add('active');
             break;
     }
 }
@@ -861,14 +948,33 @@ document.getElementById('calculate').addEventListener('click', function () {
                     break;
                 case 'neutralRangePenalty':
                     modifiers[modKey] = 0.5;
+                    break;
+                case 'blowHeaven':
+                    modifiers[modKey] = 2;
+                    break;
+                case 'neutralBlowHeaven':
+                    modifiers[modKey] = 2;
+                    break;
+                case 'curvedFire':
+                    modifiers[modKey] = 0.5;
+                    break;
+                case 'neutralCurvedFire':
+                    modifiers[modKey] = 0.5;
+                    break;
+                case 'bigShield':
+                    modifiers[modKey] = 0.5;
+                    break;
+                case 'neutralBigShield':
+                    modifiers[modKey] = 0.5;
+                    break;
             }
         }
     });
     // Коэффициенты модификаторов
-    const yourRangedModifiers = modifiers.rangePenalty*modifiers.shooting*modifiers.retribution*hiddenModifiers.doubleShoot*hiddenModifiers.rangePenalty2;
-    const yourMeleeModifiers = modifiers.basicOffense*modifiers.advancedOffense*modifiers.expertOffense*modifiers.retribution*hiddenModifiers.meleePenalty*hiddenModifiers.blowStorm;
-    const neutralRangedModifiers = modifiers.neutralRangePenalty*modifiers.fogVeil*modifiers.evasion*neutralHiddenModifiers.doubleShoot*neutralHiddenModifiers.rangePenalty2;
-    const neutralMeleeModifiers = modifiers.basicDefense*modifiers.advancedDefense*modifiers.expertDefense*neutralHiddenModifiers.meleePenalty*neutralHiddenModifiers.blowStorm;
+    const yourRangedModifiers = modifiers.rangePenalty*modifiers.shooting*modifiers.retribution*hiddenModifiers.doubleShoot*hiddenModifiers.rangePenalty2*modifiers.curvedFire*modifiers.neutralBigShield;
+    const yourMeleeModifiers = modifiers.basicOffense*modifiers.advancedOffense*modifiers.expertOffense*modifiers.retribution*hiddenModifiers.meleePenalty*hiddenModifiers.blowStorm*modifiers.blowHeaven;
+    const neutralRangedModifiers = modifiers.neutralRangePenalty*modifiers.fogVeil*modifiers.evasion*neutralHiddenModifiers.doubleShoot*neutralHiddenModifiers.rangePenalty2*modifiers.neutralCurvedFire*modifiers.bigShield;
+    const neutralMeleeModifiers = modifiers.basicDefense*modifiers.advancedDefense*modifiers.expertDefense*neutralHiddenModifiers.meleePenalty*neutralHiddenModifiers.blowStorm*modifiers.neutralBlowHeaven;
     let minDamage, maxDamage, killedUnits;
     if (isSwitchingSides) {
         // Нейтральная сторона атакует
