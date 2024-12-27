@@ -657,19 +657,19 @@ function applyForestRageEntModifier(isActive) {
     }
 }
 function applyNeutralForestRageEntModifier(isActive) {
-    const yourAttackField = document.getElementById('your-attack');
-    const yourDefenseField = document.getElementById('your-defense');
-    let baseAttack = parseInt(yourAttackField.value);
-    let baseDefense = parseInt(yourDefenseField.value);
+    const neutralAttackField = document.getElementById('neutral-attack');
+    const neutralDefenseField = document.getElementById('neutral-defense');
+    let baseAttack = parseInt(neutralAttackField.value);
+    let baseDefense = parseInt(neutralDefenseField.value);
     let transferredDefense = Math.floor(baseDefense / 2);
     if (isActive) {
-        yourAttackField.dataset.baseAttack = baseAttack;
-        yourDefenseField.dataset.baseDefense = baseDefense;
-        yourAttackField.value = baseAttack + transferredDefense;
-        yourDefenseField.value = baseDefense - transferredDefense;
+        neutralAttackField.dataset.baseAttack = baseAttack;
+        neutralDefenseField.dataset.baseDefense = baseDefense;
+        neutralAttackField.value = baseAttack + transferredDefense;
+        neutralDefenseField.value = baseDefense - transferredDefense;
     } else {
-        yourAttackField.value = yourAttackField.dataset.baseAttack || baseAttack;
-        yourDefenseField.value = yourDefenseField.dataset.baseDefense || baseDefense;
+        neutralAttackField.value = neutralAttackField.dataset.baseAttack || baseAttack;
+        neutralDefenseField.value = neutralDefenseField.dataset.baseDefense || baseDefense;
     }
 }
 function applyDefensivePositionModifier(isActive) {
