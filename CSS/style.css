@@ -218,11 +218,12 @@ input[type="number"]::-webkit-outer-spin-button {
     padding: 4% 8%;
     border: 1px solid #8D6035;
     border-radius: 3px;
-    font-size: 11px;
+    font-size: 14px;
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
 }
 
 .modifier:hover::after {
@@ -269,6 +270,7 @@ input[type="number"]::-webkit-outer-spin-button {
     transform: translateX(-50%);
     background: #322A21;
     color: #C5BEA1;
+    border: 2px solid #8D6035;
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 12px;
@@ -281,6 +283,9 @@ input[type="number"]::-webkit-outer-spin-button {
 .switch-sides:hover::after {
     opacity: 1;
     visibility: visible;
+}
+.switch-sides:active {
+    animation: bounce 0.4s ease-out; 
 }
 
 .image-row {
@@ -324,6 +329,7 @@ input[type="number"]::-webkit-outer-spin-button {
     position: absolute;
     bottom: 110%;                  
     left: 50%;
+    border: 2px solid #8D6035;
     transform: translateX(-50%);
     background: #322A21;
     color: #C5BEA1;
@@ -340,6 +346,22 @@ input[type="number"]::-webkit-outer-spin-button {
     opacity: 1;
     visibility: visible;
 }
+.action-button:active {
+    animation: bounce 0.4s ease-out; 
+}
+
+@keyframes bounce {
+    0% {
+        transform: scale(0.95); 
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 .action-button:hover {
     transform: scale(1.05);
 }
@@ -359,7 +381,7 @@ input[type="number"]::-webkit-outer-spin-button {
     font-size: 24px;
 }
 .glowing-border {
-    box-shadow: 0 0 15px #F3A316, 0 0 20px #F3A316;
+    box-shadow: 0 0 15px #00bfff, 0 0 20px #00bfff;
   }
 .unit-ability{
     background-image: url('img/ability.png');

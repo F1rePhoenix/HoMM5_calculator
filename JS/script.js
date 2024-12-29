@@ -295,6 +295,19 @@ const units = {
         { name: "Свободные циклопы", attack: 30, defense: 27, damage: "45-57", health: 225, image: "CSS/img/Units/Horde/X8T7G1.png", unitData: 4 },
         { name: "Кровоглазые циклопы", attack: 28, defense: 28, damage: "35-50", health: 235, image: "CSS/img/Units/Horde/X8T7G2.png", unitData: 4 }
         ]
+    },
+    "Нейтральные существа": {
+    "-":[
+        { name: "Рыцари смерти", attack: 23, defense: 23, damage: "25-35", health: 90, image: "CSS/img/Units/Neutrals/DeathKnight.png", unitData: 0 },
+        { name: "Фениксы", attack: 33, defense: 33, damage: "30-50", health: 150, image: "CSS/img/Units/Neutrals/Phoenix.png", unitData: 0 },
+        { name: "Воздушные элементали", attack: 10, defense: 4, damage: "6-8", health: 38, image: "CSS/img/Units/Neutrals/AirElemental.png", unitData: 0 },
+        { name: "Земные элементали", attack: 8, defense: 14, damage: "10-14", health: 72, image: "CSS/img/Units/Neutrals/EarthElemental.png", unitData: 0 },
+        { name: "Огненные элементали", attack: 12, defense: 4, damage: "11-20", health: 33, image: "CSS/img/Units/Neutrals/FireElemental.png", unitData: 1 },
+        { name: "Водные элементали", attack: 10, defense: 10, damage: "8-12", health: 48, image: "CSS/img/Units/Neutrals/WaterElemental.png", unitData: 0 },
+        { name: "Мумии", attack: 8, defense: 9, damage: "20-30", health: 50, image: "CSS/img/Units/Neutrals/Mummy.png", unitData: 0 },
+        { name: "Мантикоры", attack: 15, defense: 15, damage: "30-50", health: 120, image: "CSS/img/Units/Neutrals/Mantikora.png", unitData: 0 },
+        { name: "Волки", attack: 5, defense: 3, damage: "3-5", health: 25, image: "CSS/img/Units/Neutrals/Wolf.png", unitData: 0 }
+    ]
     }
 };
 
@@ -321,24 +334,45 @@ for (let faction in units) {
 factionSelect.addEventListener('change', () => {
     tierSelect.innerHTML = '<option disabled selected>Тир</option>';
     unitSelect.innerHTML = '<option disabled selected>Существо</option>';
-    const tiers = units[factionSelect.value];
-    for (let tier in tiers) {
+    if (factionSelect.value === "Нейтральные существа") {
         const option = document.createElement('option');
-        option.value = tier;
-        option.textContent = tier;
+        option.value = "-";
+        option.textContent = "-";
         tierSelect.appendChild(option);
+        tierSelect.value = "-";
+        const event = new Event('change');
+        tierSelect.dispatchEvent(event);
+    } else {
+        const tiers = units[factionSelect.value];
+        for (let tier in tiers) {
+            const option = document.createElement('option');
+            option.value = tier;
+            option.textContent = tier;
+            tierSelect.appendChild(option);
+        }
     }
 });
+
 
 yourFactionSelect.addEventListener('change', () => {
     yourTierSelect.innerHTML = '<option disabled selected>Тир</option>';
     yourUnitSelect.innerHTML = '<option disabled selected>Существо</option>';
-    const tiers = units[yourFactionSelect.value];
-    for (let tier in tiers) {
+    if (yourFactionSelect.value === "Нейтральные существа") {
         const option = document.createElement('option');
-        option.value = tier;
-        option.textContent = tier;
+        option.value = "-";
+        option.textContent = "-";
         yourTierSelect.appendChild(option);
+        yourTierSelect.value = "-"; 
+        const event = new Event('change');
+        yourTierSelect.dispatchEvent(event);
+    } else {
+        const tiers = units[yourFactionSelect.value];
+        for (let tier in tiers) {
+            const option = document.createElement('option');
+            option.value = tier;
+            option.textContent = tier;
+            yourTierSelect.appendChild(option);
+        }
     }
 });
 
@@ -385,6 +419,9 @@ unitSelect.addEventListener('change', () => {
     document.getElementById('neutral-big-shield').classList.remove('active');
     applyNeutralArcherModifiers()
     applyNeutralActiveModifiers()
+    if (isSwitchingSides){
+        updateAttackState(selectedUnit);
+    }
 });
 
 yourUnitSelect.addEventListener('change', () => {
@@ -412,6 +449,9 @@ yourUnitSelect.addEventListener('change', () => {
     document.getElementById('big-shield').classList.remove('active');
     applyUnitDataModifiers();
     applyActiveModifiers();
+    if (!isSwitchingSides){
+        updateAttackState(selectedUnit);
+    }
 });
 const heroAttackInput = document.getElementById('hero-attack');
 const heroDefenseInput = document.getElementById('hero-defense');
@@ -433,31 +473,63 @@ heroDefenseInput.addEventListener('blur', updateHeroStats);
 //  кнопки "Смена стороны" и "Смена типа атаки"
 let isSwitchingSides = false;
 let isRangedAttack = false;
+// Функция автоматического выставления типа атаки.
+function updateAttackState(selectedUnit) {
+    const restrictedUnitDataValues = [0, 6, 7, 9, 10, 11, 13, 14];
+    if (restrictedUnitDataValues.includes(selectedUnit.unitData)) {
+        isRangedAttack = false;
+        switchWeaponBtn.disabled = true;
+        switchWeaponBtn.style.opacity = "0.5";
+    } else {
+        isRangedAttack = true;
+        switchWeaponBtn.disabled = false;
+        switchWeaponBtn.style.opacity = "1";
+    }
+    const calculateImage = isSwitchingSides && isRangedAttack 
+        ? "CSS/img/arrow_button_flipped.png" 
+        : isSwitchingSides && !isRangedAttack 
+        ? "CSS/img/sword_flipped.png" 
+        : !isSwitchingSides && isRangedAttack 
+        ? "CSS/img/arrow_button.png" 
+        : "CSS/img/sword.png";
+
+    const switchWeaponImage = isSwitchingSides && isRangedAttack 
+        ? "CSS/img/sword_flipped.png" 
+        : isSwitchingSides && !isRangedAttack 
+        ? "CSS/img/arrow_button_flipped.png" 
+        : !isSwitchingSides && isRangedAttack 
+        ? "CSS/img/sword.png" 
+        : "CSS/img/arrow_button.png";
+    calculate.style.backgroundImage = `url('${calculateImage}')`;
+    switchWeaponBtn.style.backgroundImage = `url('${switchWeaponImage}')`;
+}
+
+
 const calculate = document.getElementById('calculate');
 const switchWeaponBtn = document.getElementById('switch-weapon');
 function handleSwitchSides() {
-    if (isSwitchingSides){
+    if (isSwitchingSides) {
         document.getElementById('your-unit-image').classList.add('glowing-border');
         document.getElementById('neutral-unit-image').classList.remove('glowing-border');
-    }
-    else{
+    } else {
         document.getElementById('neutral-unit-image').classList.add('glowing-border');
         document.getElementById('your-unit-image').classList.remove('glowing-border');
     }
-    const calculateImage = !isSwitchingSides && isRangedAttack 
-        ? "CSS/img/arrow_button_flipped.png" 
-        : !isSwitchingSides && !isRangedAttack 
-        ? "CSS/img/sword_flipped.png" 
-        : isSwitchingSides && isRangedAttack 
-        ? "CSS/img/arrow_button.png" 
+    const calculateImage = !isSwitchingSides && isRangedAttack
+        ? "CSS/img/arrow_button_flipped.png"
+        : !isSwitchingSides && !isRangedAttack
+        ? "CSS/img/sword_flipped.png"
+        : isSwitchingSides && isRangedAttack
+        ? "CSS/img/arrow_button.png"
         : "CSS/img/sword.png";
-    const switchWeaponImage = !isSwitchingSides && isRangedAttack 
-        ? "CSS/img/sword_flipped.png" 
-        : !isSwitchingSides && !isRangedAttack 
-        ? "CSS/img/arrow_button_flipped.png" 
-        : isSwitchingSides && isRangedAttack 
-        ? "CSS/img/sword.png" 
+    const switchWeaponImage = !isSwitchingSides && isRangedAttack
+        ? "CSS/img/sword_flipped.png"
+        : !isSwitchingSides && !isRangedAttack
+        ? "CSS/img/arrow_button_flipped.png"
+        : isSwitchingSides && isRangedAttack
+        ? "CSS/img/sword.png"
         : "CSS/img/arrow_button.png";
+
     calculate.style.backgroundImage = `url('${calculateImage}')`;
     switchWeaponBtn.style.backgroundImage = `url('${switchWeaponImage}')`;
     isSwitchingSides = !isSwitchingSides;
@@ -468,8 +540,17 @@ function handleSwitchSides() {
         calculate.classList.remove('spin-effect');
         switchWeaponBtn.classList.remove('spin-effect');
     }, 300);
+    const selectedUnit = isSwitchingSides
+        ? units[factionSelect.value]?.[tierSelect.value]?.[unitSelect.value] // Нейтральное существо
+        : units[yourFactionSelect.value]?.[yourTierSelect.value]?.[yourUnitSelect.value]; // Свое существо
+    if (selectedUnit) {
+        updateAttackState(selectedUnit);
+    }
 }
+
+// Привязываем обработчик к кнопке
 document.getElementById('switch-sides').addEventListener('click', handleSwitchSides);
+
 
 
 switchWeaponBtn.addEventListener('click', () => {
