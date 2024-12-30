@@ -292,8 +292,8 @@ const units = {
     ],
     "7": [
         { name: "Циклопы", attack: 29, defense: 27, damage: "40-52", health: 220, image: "CSS/img/Units/Horde/X8T7G0.png", unitData: 0 },
-        { name: "Свободные циклопы", attack: 30, defense: 27, damage: "45-57", health: 225, image: "CSS/img/Units/Horde/X8T7G1.png", unitData: 4 },
-        { name: "Кровоглазые циклопы", attack: 28, defense: 28, damage: "35-50", health: 235, image: "CSS/img/Units/Horde/X8T7G2.png", unitData: 4 }
+        { name: "Свободные циклопы", attack: 30, defense: 27, damage: "45-57", health: 225, image: "CSS/img/Units/Horde/X8T7G1.png", unitData: 15 },
+        { name: "Кровоглазые циклопы", attack: 28, defense: 28, damage: "35-50", health: 235, image: "CSS/img/Units/Horde/X8T7G2.png", unitData: 15 }
         ]
     },
     "Нейтральные существа": {
@@ -480,6 +480,10 @@ function updateAttackState(selectedUnit) {
         isRangedAttack = false;
         switchWeaponBtn.disabled = true;
         switchWeaponBtn.style.opacity = "0.5";
+    } else if (selectedUnit.unitData === 15) {
+        isRangedAttack = false; 
+        switchWeaponBtn.disabled = false;
+        switchWeaponBtn.style.opacity = "1";
     } else {
         isRangedAttack = true;
         switchWeaponBtn.disabled = false;
@@ -783,7 +787,6 @@ function applyUnitDataModifiers() {
     removeUnitAbility();
     switch (unitDataIndex) {
         case 0: // Юнит ближнего боя
-
             break;
         case 1: // Стрелок
             document.getElementById('range-penalty').classList.add('active');
@@ -852,6 +855,11 @@ function applyUnitDataModifiers() {
             break;
         case 14: // Юниты со способностью большой щит
             document.getElementById('big-shield').classList.add('active');
+            break;
+        case 15: // Циклопы
+            document.getElementById('range-penalty').classList.add('active');
+            document.getElementById('range-penalty').dataset.tooltip = "Стрельба со штрафом";
+            hiddenModifiers.rangePenalty2 = 0.5;
             break;
     }
 }
@@ -928,6 +936,11 @@ function applyNeutralArcherModifiers() {
             break;
         case 14: // Юниты со способностью большой щит
             document.getElementById('neutral-big-shield').classList.add('active');
+            break;
+        case 15: // Циклопы
+            document.getElementById('neutral-range-penalty').classList.add('active');
+            document.getElementById('neutral-range-penalty').dataset.tooltip = "Стрельба со штрафом";
+            neutralHiddenModifiers.rangePenalty2 = 0.5;
             break;
     }
 }
