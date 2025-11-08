@@ -15,17 +15,13 @@
 body {
     margin: 0;
     padding: 0;
-    /* background-color: #E7B26B; */
+    background-color: #1a1a2e;
     font-family: "Corsiva";
-    color: #294761;
+    color: #F1BF11;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    background-image: url('img/background.png'); /* Путь к файлу текстуры */
-    background-size: cover; /* Это обеспечит покрытие всей страницы */
-    background-repeat: repeat; /* Если текстура меньше, чем экран, она будет повторяться */
-    background-position: center; /* Центрирует фон */
 }
 
 .container {
@@ -36,7 +32,7 @@ body {
 h1 {
     text-align: center;
     font-size: 46px;
-    color: #294761;
+    color: #F1BF11;
     margin: 2% 0px;
 }
 
@@ -381,7 +377,7 @@ input[type="number"]::-webkit-outer-spin-button {
     font-size: 24px;
 }
 .glowing-border {
-    box-shadow: 0 0 15px #00bfff, 0 0 20px #00bfff;
+    box-shadow: 0 0 15px #F1BF11, 0 0 20px #F1BF11;
   }
 .unit-ability{
     background-image: url('img/ability.png');
